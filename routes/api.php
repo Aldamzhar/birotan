@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TextAnalysisController;
 use Illuminate\Http\Request;
@@ -22,6 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/analyze-text', [TextAnalysisController::class, 'analyzeText']);
 Route::post('/words-and-occurrences', [TextAnalysisController::class, 'wordsAndOccurrences']);
-Route::post('/check-words', [TextAnalysisController::class, 'checkWordsAgainstDatabase']);
-
-
+Route::post('/check-baskats', [TextAnalysisController::class, 'checkBaskats']);
+Route::post('/upload-file', [FileController::class, 'uploadFile'])->name('upload.file');
+Route::post('/import-text', [FileController::class, 'importTxt']);

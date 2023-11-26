@@ -10,7 +10,7 @@
 <header>
     <a href="{{ url('/about') }}" class="menu-item">Сайт туралы</a>
     <a href="{{ url('/birotanlex') }}" class="menu-item">БірОтан лексика</a>
-    <a href="{{ url('/mypage') }}"><img src="/storage/img_4.png"></a>
+    <a href="{{ url('/mypage') }}" class="menu-item"><img src="/storage/img_8.png"></a>
     <a href="{{ url('/technews') }}" class="menu-item">Tech + жаналық</a>
     <a href="{{ url('/birotanauen') }}" class="menu-item">БірОтан өуені</a>
 </header>
@@ -65,6 +65,15 @@
         color: #444;
         margin: 0 10px;
         font-size: 14px;
+    }
+
+    .menu-item img {
+        max-width: 100%; /* Ensures the image is not bigger than the container */
+        height: auto; /* Maintains the aspect ratio */
+        width: auto; /* Sets the image width to auto */
+        /*height: auto; !* Sets the image height to auto *!*/
+        max-height: 50px; /* Adjust the max-height to match the surrounding elements */
+        vertical-align: top; /* Aligns the image with the top of the line */
     }
 
     h1 {

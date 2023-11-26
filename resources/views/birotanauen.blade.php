@@ -7,27 +7,30 @@
     <title>Website</title>
 </head>
 
+<body>
 <header>
     <a href="{{ url('/about') }}" class="menu-item">Сайт туралы</a>
     <a href="{{ url('/birotanlex') }}" class="menu-item">БірОтан лексика</a>
-    <a href="{{ url('/mypage') }}"><img src="/storage/img_4.png"></a>
+    <a href="{{ url('/mypage') }}" class="menu-item"><img src="/storage/img_8.png"></a>
     <a href="{{ url('/technews') }}" class="menu-item">Tech + жаналық</a>
     <a href="{{ url('/birotanauen') }}" class="menu-item">БірОтан өуені</a>
 </header>
-<body>
+
+<main>
 
 <div class="videos-list">
-    @if(isset($videos['items']))
-        @foreach($videos['items'] as $video)
+    @if(isset($videos))
+        @foreach($videos as $video)
             <div class="video-item">
                 <div class="video-thumbnail">
-                    <img src="{{ $video['snippet']['thumbnails']['medium']['url'] }}" alt="{{ $video['snippet']['title'] }}">
+                    <img src="{{ $video->getYouTubeThumbnailUrl($video->youtube_link) }}" alt="{{ $video->title }}">
                 </div>
                 <div class="video-info">
-                    <h3 class="video-title">{{ $video['snippet']['title'] }}</h3>
+                    <h3 class="video-title">{{ $video->title }}</h3>
                     <div class="video-meta">
-                        <span class="video-channel">{{ $video['snippet']['channelTitle'] }}</span>
-{{--                        <span class="video-duration">{{ gmdate('i:s', $video['contentDetails']['duration']) }}</span> --}}{{-- Duration needs conversion --}}
+                        <p>{{ \Carbon\Carbon::parse($video->publication_date)->format('d/m/Y') }}</p>
+                        <p>{{ $video->author_name }}</p>
+{{--                        <p>{{ $video->description }}</p>--}}
                     </div>
                 </div>
             </div>
@@ -36,7 +39,7 @@
         <p>No videos found.</p>
     @endif
 </div>
-
+</main>
 </body>
 
 @include('footer')
@@ -50,6 +53,12 @@
         padding: 0;
         background-color: tan;
 
+    }
+
+    main {
+        /*padding-top: 70px; !* Account for the fixed header *!*/
+        padding-bottom: 200px;
+        background-color: tan;
     }
 
     header {
@@ -106,6 +115,15 @@
         overflow: hidden; /* In case the image is too big */
     }
 
+    .menu-item img {
+        max-width: 100%; /* Ensures the image is not bigger than the container */
+        height: auto; /* Maintains the aspect ratio */
+        width: auto; /* Sets the image width to auto */
+        /*height: auto; !* Sets the image height to auto *!*/
+        max-height: 50px; /* Adjust the max-height to match the surrounding elements */
+        vertical-align: top; /* Aligns the image with the top of the line */
+    }
+
     .news-image img {
         width: 100%;
         height: auto;
@@ -132,32 +150,43 @@
         color: #333; /* Description text color */
     }
 
-    .videos-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-    }
     .video-item {
-        width: 250px; /* You can adjust the width as needed */
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        overflow: hidden;
+        display: flex; /* Align thumbnail and info side by side */
+        /*background-color: #fff; !* White background *!*/
+        border-radius: 4px; /* Rounded corners */
+        overflow: hidden; /* Ensures the content fits within the borders */
+        /*box-shadow: 0 2px 5px rgba(0,0,0,0.2); !* Adds a subtle shadow *!*/
+        font-family: Arial, sans-serif; /* Sets the font */
+        margin: 20px; /* Adds space between video items */
     }
+
     .video-thumbnail img {
-        width: 100%;
-        display: block;
+        width: 150px; /* Sets a fixed width for the image */
+        height: 100px; /* Sets a fixed height for the image */
+        object-fit: cover; /* Ensures the image covers the area */
     }
+
     .video-info {
-        padding: 10px;
+        padding: 10px; /* Adds padding inside the video info area */
+        display: flex;
+        flex-direction: column; /* Stack the title and meta information */
+        justify-content: center; /* Center the content vertically */
     }
+
     .video-title {
-        font-size: 16px;
-        margin: 0 0 10px;
+        margin: 0; /* Removes default margin */
+        color: #333; /* Dark text for title */
+        font-size: 18px; /* Larger font size for the title */
+        font-weight: bold; /* Makes the title bold */
     }
+
     .video-meta {
-        font-size: 14px;
-        color: #666;
+        font-size: 14px; /* Smaller font size for meta information */
+        color: #666; /* Lighter text for meta information */
+    }
+
+    .video-meta p {
+        margin: 5px 0; /* Adds spacing between meta information lines */
     }
 
 
@@ -243,6 +272,8 @@
         background-color: #007bff;
         border-color: #007bff;
     }
+
+
 
 
 </style>

@@ -10,7 +10,7 @@
 <header>
     <a href="{{ url('/about') }}" class="menu-item">Сайт туралы</a>
     <a href="{{ url('/birotanlex') }}" class="menu-item">БірОтан лексика</a>
-    <a href="{{ url('/mypage') }}"><img src="/storage/img_4.png"></a>
+    <a href="{{ url('/mypage') }}" class="menu-item"><img src="/storage/img_8.png"></a>
     <a href="{{ url('/technews') }}" class="menu-item">Tech + жаналық</a>
     <a href="{{ url('/birotanauen') }}" class="menu-item">БірОтан өуені</a>
 </header>
@@ -20,12 +20,12 @@
         @foreach ($newsItems as $article)
             <div class="news-item">
                 <div class="news-image">
-                    <img src="{{ $article['urlToImage'] }}" alt="{{ $article['title'] }}">
+                    <img src="{{ \Illuminate\Support\Facades\Storage::url($article['img']) }}" alt="{{ $article['title'] }}">
                 </div>
                 <div class="news-text">
                     <h2 class="news-title">{{ $article['title'] }}</h2>
-                    <p class="news-meta">{{ (new DateTime($article['publishedAt']))->format('d/m/Y') }} | {{ $article['author'] }}</p>
-                    <p class="news-description">{{ $article['description'] }}</p>
+                    <p class="news-meta">{{ (new DateTime($article['publishedAt']))->format('d/m/Y') }} | {{ $article['author_name'] }}</p>
+{{--                    <p class="news-description">{{ $article['description'] }}</p>--}}
                 </div>
             </div>
         @endforeach
@@ -97,6 +97,15 @@
         font-size: 35px;
         color: #0277BD; /* Change this color to match your design */
         margin: 0;
+    }
+
+    .menu-item img {
+        max-width: 100%; /* Ensures the image is not bigger than the container */
+        height: auto; /* Maintains the aspect ratio */
+        width: auto; /* Sets the image width to auto */
+        /*height: auto; !* Sets the image height to auto *!*/
+        max-height: 50px; /* Adjust the max-height to match the surrounding elements */
+        vertical-align: top; /* Aligns the image with the top of the line */
     }
 
     .menu-item:hover {

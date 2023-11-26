@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\KazakhSorter;
 use App\Http\Traits\KazakhSorterTrait;
+use App\Models\Baskat;
+use App\Models\Zhanas;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -84,8 +86,7 @@ class TextAnalysisController extends Controller
         ]);
     }
 
-    public function wordsAndOccurrences(Request $request): JsonResponse
-    {
+    public function wordRepetitions(Request $request) {
         $words = $this->getWordsList($request);
 
         $wordRepetitions = [];
@@ -97,80 +98,38 @@ class TextAnalysisController extends Controller
                 $wordRepetitions[$word] = 1;
             }
         }
+        return $wordRepetitions;
+    }
+
+    public function wordsAndOccurrences(Request $request): JsonResponse
+    {
+        $wordRepetitions = $this->wordRepetitions($request);
 
         return response()->json([
             'wordRepetitions' => $wordRepetitions
         ]);
     }
 
-    public function checkWordsAgainstDatabase(Request $request) {
-        $words = $this->getWordsList($request);
-        $baskatDatabase = [
-            "Бала",    // Child
-            "Кітап",   // Book
-            "Су",      // Water
-            "Ой",      // House
-            "Тау",     // Mountain
-            "Сәлем",   // Hello
-            "Ас",      // Food
-            "Адам",    // Person
-            "Қала",    // City
-            "Көз",     // Eye
-            "Көш",     // Street
-            "Құс",     // Bird
-            "Бүгін",   // Today
-            "Ертең",   // Tomorrow
-            "Түн",     // Night
-            "Күн",     // Day
-            "Жүрек",   // Heart
-            "Тіл",     // Language
-            "Қол",     // Hand
-            "Аяқ",     // Foot
-            "Үй",      // Home
-            "Мектеп",  // School
-            "Оқу",     // Study
-            "Дос",     // Friend
-            "Әке",     // Brother
-            "Апа",     // Sister
-            "Ана",     // Mother
-            "Әке",     // Father
-            "Көрік",   // View
-            "Жаз",     // Summer
-            "Күз",     // Autumn
-            "Қыс",     // Winter
-            "Көк",     // Sky
-            "Жол",     // Road
-            "Жер",     // Earth
-            "Бас",     // Head
-            "Балық",   // Fish
-            "Терең",   // Deep
-            "Бір",     // One
-            "Екі",     // Two
-            "Үш",      // Three
-            "Төрт",    // Four
-            "Бес",     // Five
-            "Алма",    // Apple
-            "Сиыр",    // Cow
-            "Қой",     // Sheep
-            "Жылан",   // Snake
-            "Орман",   // Forest
-            "Теңіз",   // Sea
-            "Көл",     // Lake
-            "Қар",     // Snow
-            "Жаңбыр",  // Rain
-        ];
-        $baskatDatabase = array_map('mb_strtolower', $baskatDatabase);
-        $errors = [];
 
-        foreach ($words as $word) {
-            if (!in_array(mb_strtolower($word), $baskatDatabase)) {
-                // Highlight word with red wavy underline.
-                // You can also add other checks for errors here.
-                $errors[] = $word;
+    public function checkBaskats(Request $request)
+    {
+        $words = array_keys($this->wordRepetitions($request));
+        $baskatsWords = Baskat::pluck('word')->map(function ($word) {
+            return mb_strtolower($word); // Convert each word to lowercase
+        })->all();
+
+        $wordsNotInBaskats = array_filter($words, function($word) use ($baskatsWords) {
+            return !in_array(mb_strtolower($word), $baskatsWords); // Case-insensitive comparison
+        });
+        foreach ($wordsNotInBaskats as $word) {
+            if (!Zhanas::where('word', $word)->first()) {
+                Zhanas::create([
+                    'word' => $word
+                ]);
             }
         }
 
-        return response()->json(['errors' => $errors]);
+        return response()->json(array_values($wordsNotInBaskats));
     }
 
 }
