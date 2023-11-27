@@ -115,11 +115,11 @@ class TextAnalysisController extends Controller
     {
         $words = array_keys($this->wordRepetitions($request));
         $baskatsWords = Baskat::pluck('word')->map(function ($word) {
-            return mb_strtolower($word); // Convert each word to lowercase
+            return $word; // Convert each word to lowercase
         })->all();
 
         $wordsNotInBaskats = array_filter($words, function($word) use ($baskatsWords) {
-            return !in_array(mb_strtolower($word), $baskatsWords); // Case-insensitive comparison
+            return !in_array($word, $baskatsWords); // Case-insensitive comparison
         });
         foreach ($wordsNotInBaskats as $word) {
             if (!Zhanas::where('word', $word)->first()) {

@@ -339,13 +339,18 @@
                 .then(response => response.json())
                 .then(wordsNotInBaskats => {
                     console.log('Words not in Baskat:', wordsNotInBaskats);
+                    const punctuation = /[.,/#!?«»$%^&*;:{}=-\_`~()]/g;
                     const words = text.split(/\s+/);
                     const formattedText = words.map(word => {
-                        // Check if the word is in the list of words not in Baskat
-                        if (wordsNotInBaskats.includes(word)) {
-                            // Wrap the word in a span with class for styling
+                        // Remove punctuation from the beginning and end of the word for checking
+                        const cleanWord = word.replace(punctuation, '');
+
+                        // Check if the cleaned word is in the list of words not in Baskat
+                        if (wordsNotInBaskats.includes(cleanWord)) {
+                            // Wrap the original word (with punctuation) in a span with class for styling
                             return `<span class="not-in-baskat">${word}</span>`;
                         } else {
+                            // Keep the original word (with punctuation)
                             return word;
                         }
                     }).join(' '); // Re-join the words into a single string
@@ -357,6 +362,26 @@
                 .catch(error => {
                     console.error('Error:', error);
                 });
+                //     const uniqueWordsSet = new Set(text.split(/\s+/));
+                //
+                //     // Convert the set back to an array for mapping
+                //     const uniqueWordsArray = Array.from(uniqueWordsSet);
+                //
+                //     // Map over the unique words and check if each is in the list of words not in Baskat
+                //     const formattedText = uniqueWordsArray.map(word => {
+                //         // Check if the word is in the list of words not in Baskat
+                //         if (wordsNotInBaskats.includes(word)) {
+                //             // Wrap the word in a span with class for styling
+                //             return `<span class="not-in-baskat">${word}</span>`;
+                //         }
+                //     }).filter(Boolean).join(' '); // Filter out any undefined elements and re-join into a string
+                //
+                //     const outputDiv = document.querySelector('.output');
+                //     outputDiv.innerHTML = formattedText; // Set the HTML content of the output div
+                // })
+                // .catch(error => {
+                //     console.error('Error:', error);
+                // });
 
         });
     });
