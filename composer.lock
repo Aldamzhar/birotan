@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6312291850e9089fdb964c8e1ab78d0d",
+    "content-hash": "012c4c1e22991192c5e6884ae5ea7208",
     "packages": [
         {
             "name": "bezhansalleh/filament-language-switch",

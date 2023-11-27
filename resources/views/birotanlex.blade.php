@@ -2,6 +2,11 @@
 <html lang="en">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- For Mammoth.js (DOCX files) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <!-- For PDF.js (PDF files) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
+
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,9 +25,11 @@
 
 <div class="container">
     <div class="textarea-container">
-        <textarea class="input" placeholder="Insert your text..."></textarea>
+        <input type="text" id="username" name="username" placeholder="Пайдаланушының аты" required>
+        <input type="text" id="textTitle" name="textTitle" placeholder="Мәтіннің аты" required>
+        <textarea class="input" placeholder="Мәтініңді еңгізіңіз..."></textarea>
         <div class="textarea-footer">
-            <span>0/3000</span>
+            <span>0/5000</span>
             <div class="icons">
                 <button id="pasteTextButton">📋</button> <!-- You can replace this with the actual icon -->
             </div>
@@ -40,7 +47,7 @@
     </div>
 </div>
 <div class="bottom-buttons">
-{{--    <button>Бастау</button>--}}
+    <button id="baskatBaseFillingButton">Басқат базасың толтыру</button>
     <button id="downloadButton">Нәтижелерді жүктеу</button>
 </div>
 
@@ -149,6 +156,17 @@
         resize: none;
     }
 
+    input[type=text] {
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 100%;
+        /*padding: 10px;*/
+        margin-bottom: 10px; /* adds space between the inputs */
+        /*box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); !* adds a subtle shadow like the textarea *!*/
+        resize: none;
+    }
+
     .not-in-baskat {
         color: red;
         font-weight: bold;
@@ -239,12 +257,12 @@
             const words = textarea.value.split(/\s+/).filter(word => word.length > 0); // Split by spaces and filter out any empty strings
             const wordCount = words.length;
 
-            wordCountSpan.textContent = `${wordCount}/3000`;
+            wordCountSpan.textContent = `${wordCount}/5000`;
 
-            if (wordCount > 3000) {
+            if (wordCount > 5000) {
                 wordCountSpan.style.color = "red";
                 // Optionally: prevent further input beyond 3000 words
-                const limitedWords = words.slice(0, 3000).join(" ");
+                const limitedWords = words.slice(0, 5000).join(" ");
                 textarea.value = limitedWords;
             } else {
                 wordCountSpan.style.color = ""; // reset to default color
@@ -393,7 +411,13 @@
             "<head><style>.not-in-baskat { color: red; font-weight: bold;}</style>" +
             "<meta charset='utf-8'></head><body>";
         var footer = "</body></html>";
-        var sourceHTML = header + `Results:\n\nБОЛ: ${results.bol}\n\nСөздер мен қайталану: ${results.wordRepetition}\n\nЖаңа + қате сөздер: ${results.errorWords}` + footer;
+        const username = document.getElementById('username').value;
+        const textTitle = document.getElementById('textTitle').value;
+
+        var sourceHTML = header +
+            `<b>Пайдаланушының аты:</b> ${username}<br><b>Мәтіннің аты:</b> ${textTitle}` +
+            `<br><br><b>БОЛ:<br></b> ${results.bol}<br><br><b>Сөздер мен қайталану:<br></b> ${results.wordRepetition}` +
+            `<br><br><b>Жаңа + қате сөздер:<br></b> ${results.errorWords}` + footer;
 
         var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
         var fileDownload = document.createElement("a");
@@ -416,35 +440,86 @@
     });
 
     document.getElementById('fileInput').addEventListener('change', async function(event) {
-        // Get the file from the input
         const file = event.target.files[0];
-        if (file) {
-            // Prepare the FormData object to send the file to the server
-            const formData = new FormData();
-            formData.append('file', file);
+        const wordCountSpan = document.querySelector(".textarea-footer span");
+        const inputTextarea = document.querySelector('.textarea-container .input');
 
-            // Fetch call to send the file to your Laravel backend
-            try {
-                const response = await fetch('/api/upload-file', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                });
+        if (!file) {
+            console.error("No file was selected.");
+            return;
+        }
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                // Set the extracted text into the textarea
-                document.querySelector('.input').value = data.text;
-            } catch (error) {
-                console.error('Error:', error);
+        if (file.type === "text/plain") {
+            // Handle .txt files natively
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                displayText(text);
+            };
+            reader.onerror = function() {
+                console.error("Error reading the text file.");
+            };
+            reader.readAsText(file);
+        } else if (file.type === "application/pdf") {
+            // Use pdf.js for PDFs
+            readPdfFile(file);
+        } else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+            // Use mammoth.js for DOCX files
+            readDocxFile(file);
+        } else {
+            console.error("Unsupported file type.");
+        }
+
+        function displayText(text) {
+            inputTextarea.value = text;
+            updateWordCount(text);
+        }
+
+        function updateWordCount(text) {
+            const words = text.split(/\s+/).filter(word => word.length > 0);
+            const wordCount = words.length;
+            wordCountSpan.textContent = `${wordCount}/5000`;
+
+            if (wordCount > 5000) {
+                wordCountSpan.style.color = "red";
+                inputTextarea.value = words.slice(0, 5000).join(" ");
+            } else {
+                wordCountSpan.style.color = ""; // Reset to default color
             }
         }
-    });
 
+        async function readPdfFile(file) {
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const typedarray = new Uint8Array(e.target.result);
+
+                const pdf = await pdfjsLib.getDocument({ data: typedarray }).promise;
+                const firstPage = await pdf.getPage(1);
+                const textContent = await firstPage.getTextContent();
+
+                const text = textContent.items.map(item => item.str).join(' ');
+                displayText(text);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        async function readDocxFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const arrayBuffer = e.target.result;
+
+                mammoth.extractRawText({ arrayBuffer: arrayBuffer })
+                    .then(function(result) {
+                        const text = result.value;
+                        displayText(text);
+                    })
+                    .catch(function(err) {
+                        console.error(err);
+                    });
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    });
 
 
 </script>

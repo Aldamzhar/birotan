@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\BaskatsImport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Excel;
 use Smalot\PdfParser\Parser;
 use Smalot\PdfParser\Parser as PdfParser;
 use PhpOffice\PhpWord\IOFactory as WordIOFactory;
@@ -43,18 +45,13 @@ class FileController extends Controller
             case 'doc':
             case 'docx':
                 $phpWord = WordIOFactory::load($file->getRealPath());
-                dd($phpWord->getSections()[0]->getElements()[0]);
-                foreach ($phpWord->getSections() as $section) {
-                    foreach ($section->getElements() as $element) {
-                        $text .= $element->text;
-                    }
-                }
-
-//                $text = strip_tags($phpWord->getSections()[0]->getElements()[0]->getText()); // Simple extraction
+                $text = strip_tags($phpWord->getSections()[0]->getElements()[0]->getText()); // Simple extraction
                 break;
         }
 
         return response()->json(['text' => $text]);
     }
+
+
 }
 

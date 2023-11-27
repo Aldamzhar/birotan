@@ -19,7 +19,7 @@ class ListBaskats extends ListRecords
             Actions\CreateAction::make(),
             ImportAction::make('Импорт')->fields([
                 ImportField::make('word')->required()
-            ])->uniqueField('word'),
+            ])->uniqueField('word')
         ];
     }
 }
