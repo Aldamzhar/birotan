@@ -20,14 +20,14 @@
     <a href="{{ url('/birotanlex') }}" class="menu-item">БірОтан лексика</a>
     <a href="{{ url('/mypage') }}" class="menu-item"><img src="/storage/img_8.png"></a>
     <a href="{{ url('/technews') }}" class="menu-item">Tech + жаналық</a>
-    <a href="{{ url('/birotanauen') }}" class="menu-item">БірОтан өуені</a>
+    <a href="{{ url('/birotanauen') }}" class="menu-item">БірОтан әуені</a>
 </header>
 
 <div class="container">
     <div class="textarea-container">
         <input type="text" id="username" name="username" placeholder="Пайдаланушының аты" required>
-        <input type="text" id="textTitle" name="textTitle" placeholder="Мәтіннің аты" required>
-        <textarea class="input" placeholder="Мәтініңді еңгізіңіз..."></textarea>
+        <input type="text" id="textTitle" name="textTitle" placeholder="Мәтін тақырыбы" required>
+        <textarea class="input" placeholder="Мәтінді енгізіңіз..."></textarea>
         <div class="textarea-footer">
             <span>0/5000</span>
             <div class="icons">
@@ -47,7 +47,7 @@
     </div>
 </div>
 <div class="bottom-buttons">
-    <button id="baskatBaseFillingButton">Басқат базасың толтыру</button>
+{{--    <button id="baskatBaseFillingButton">Басқат базасың толтыру</button>--}}
     <button id="downloadButton">Нәтижелерді жүктеу</button>
 </div>
 
@@ -252,20 +252,23 @@
     document.addEventListener("DOMContentLoaded", function() {
         const textarea = document.querySelector(".textarea-container textarea");
         const wordCountSpan = document.querySelector(".textarea-footer span");
+        const errorDiv = document.createElement('div'); // Create a new div for the error message
+        errorDiv.style.color = 'red'; // Set the error message color to red
+        errorDiv.style.paddingTop = '10px';
+        textarea.parentNode.insertBefore(errorDiv, textarea.nextSibling); // Insert the error div after the textarea
 
         textarea.addEventListener("input", function() {
-            const words = textarea.value.split(/\s+/).filter(word => word.length > 0); // Split by spaces and filter out any empty strings
+            const words = textarea.value.split(/\s+/).filter(word => word.length > 0);
             const wordCount = words.length;
 
             wordCountSpan.textContent = `${wordCount}/5000`;
 
             if (wordCount > 5000) {
-                wordCountSpan.style.color = "red";
-                // Optionally: prevent further input beyond 3000 words
+                errorDiv.textContent = "Қате! Мәтін көлемін азайтыңыз, шекті саны - 5000 сөз"; // Display the error message
                 const limitedWords = words.slice(0, 5000).join(" ");
-                textarea.value = limitedWords;
+                textarea.value = limitedWords; // Limit the text to 5000 words
             } else {
-                wordCountSpan.style.color = ""; // reset to default color
+                errorDiv.textContent = ''; // Clear the error message when under the limit
             }
         });
     });
@@ -380,27 +383,6 @@
                 .catch(error => {
                     console.error('Error:', error);
                 });
-                //     const uniqueWordsSet = new Set(text.split(/\s+/));
-                //
-                //     // Convert the set back to an array for mapping
-                //     const uniqueWordsArray = Array.from(uniqueWordsSet);
-                //
-                //     // Map over the unique words and check if each is in the list of words not in Baskat
-                //     const formattedText = uniqueWordsArray.map(word => {
-                //         // Check if the word is in the list of words not in Baskat
-                //         if (wordsNotInBaskats.includes(word)) {
-                //             // Wrap the word in a span with class for styling
-                //             return `<span class="not-in-baskat">${word}</span>`;
-                //         }
-                //     }).filter(Boolean).join(' '); // Filter out any undefined elements and re-join into a string
-                //
-                //     const outputDiv = document.querySelector('.output');
-                //     outputDiv.innerHTML = formattedText; // Set the HTML content of the output div
-                // })
-                // .catch(error => {
-                //     console.error('Error:', error);
-                // });
-
         });
     });
         // Your jsPDF related code here
@@ -416,7 +398,7 @@
 
         var sourceHTML = header +
             `<b>Пайдаланушының аты:</b> ${username}<br><b>Мәтіннің аты:</b> ${textTitle}` +
-            `<br><br><b>БОЛ:<br></b> ${results.bol}<br><br><b>Сөздер мен қайталану:<br></b> ${results.wordRepetition}` +
+            `<<br>><br><b>БОЛ:<br></b> ${results.bol}<br><br><b>Сөздер мен қайталану:<br></b> ${results.wordRepetition}` +
             `<br><br><b>Жаңа + қате сөздер:<br></b> ${results.errorWords}` + footer;
 
         var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
@@ -476,15 +458,20 @@
         }
 
         function updateWordCount(text) {
-            const words = text.split(/\s+/).filter(word => word.length > 0);
+            const textarea = document.querySelector(".textarea-container textarea");
+            const wordCountSpan = document.querySelector(".textarea-footer span");
+            const errorDiv = document.createElement('div'); // Create a new div for the error message
+            const words = textarea.value.split(/\s+/).filter(word => word.length > 0);
             const wordCount = words.length;
+
             wordCountSpan.textContent = `${wordCount}/5000`;
 
             if (wordCount > 5000) {
-                wordCountSpan.style.color = "red";
-                inputTextarea.value = words.slice(0, 5000).join(" ");
+                errorDiv.textContent = "Қате! Мәтін көлемін азайтыңыз, шекті саны - 5000 сөз"; // Display the error message
+                const limitedWords = words.slice(0, 5000).join(" ");
+                textarea.value = limitedWords; // Limit the text to 5000 words
             } else {
-                wordCountSpan.style.color = ""; // Reset to default color
+                errorDiv.textContent = ''; // Clear the error message when under the limit
             }
         }
 
