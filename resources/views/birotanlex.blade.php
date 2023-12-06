@@ -12,7 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link href='https://fonts.googleapis.com/css?family="ADLaM Display"' rel='stylesheet'>
-    <title>Website</title>
+    <link rel="icon" type="image/png" href="/storage/img_4.png">
+    <title>BirOtan</title>
 </head>
 <body>
 <header>
@@ -112,7 +113,8 @@
         text-decoration: none;
         color: #444;
         margin: 0 10px;
-        font-size: 14px;
+        font-size: 18px;
+        font-weight: bold;
     }
 
     .menu-item img {
@@ -120,7 +122,7 @@
         height: auto; /* Maintains the aspect ratio */
         width: auto; /* Sets the image width to auto */
         /*height: auto; !* Sets the image height to auto *!*/
-        max-height: 50px; /* Adjust the max-height to match the surrounding elements */
+        max-height: 60px; /* Adjust the max-height to match the surrounding elements */
         vertical-align: top; /* Aligns the image with the top of the line */
     }
 
@@ -204,6 +206,12 @@
         font-size: 16px;
         cursor: pointer;
     }
+
+    #downloadButton {
+        padding: 20px 40px; /* Increase padding to make button larger */
+        font-size: 1.1em; /* Increase font size */
+    }
+
 
     .buttons {
         display: flex;
@@ -390,7 +398,7 @@
         var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
             "xmlns:w='urn:schemas-microsoft-com:office:word' " +
             "xmlns='http://www.w3.org/TR/REC-html40'>" +
-            "<head><style>.not-in-baskat { color: red; font-weight: bold;}</style>" +
+            "<head><style>.not-in-baskat { color: red; }</style>" +
             "<meta charset='utf-8'></head><body>";
         var footer = "</body></html>";
         const username = document.getElementById('username').value;

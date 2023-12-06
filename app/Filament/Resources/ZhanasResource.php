@@ -22,13 +22,21 @@ class ZhanasResource extends Resource
 {
     protected static ?string $model = Zhanas::class;
 
+    protected static ?string $navigationLabel = 'Жаңас';
+
+    protected static ?string $label = 'Жаңас';
+
+    protected static ?string $pluralModelLabel = 'Жаңас';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('word')->required()->maxLength(255),
+                Forms\Components\TextInput::make('word')->label('Слово')->required()->maxLength(255),
             ]);
     }
 
@@ -36,7 +44,7 @@ class ZhanasResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('word')->searchable(),
+                Tables\Columns\TextColumn::make('word')->label('Слово')->searchable(),
             ])
             ->filters([
                 //
@@ -44,7 +52,7 @@ class ZhanasResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('move')
-                    ->label('Move to Correcteds')
+                    ->label('Переместить в Исправленные')
                     ->action(fn (Zhanas $record) => static::moveRow($record))
                     ->requiresConfirmation()
             ])
@@ -52,7 +60,7 @@ class ZhanasResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\BulkAction::make('move-all')
-                    ->label('Move all to Correcteds')
+                    ->label('Переместить все записи в Исправленные')
                     ->action(function ($records) {
                                 static::moveAllRows($records);
                             })
@@ -81,7 +89,7 @@ class ZhanasResource extends Resource
         });
 
         Notification::make()
-            ->title('All records moved successfully to Corrected.')
+            ->title('Все записи успешно перемещены в Исправленные')
             ->success()
             ->send();
     }
@@ -101,7 +109,7 @@ class ZhanasResource extends Resource
         });
 
         // Optionally, you can add a success message
-        Notification::make('success')->title('Record moved successfully to Corrected.')->send();
+        Notification::make('success')->title('Запись успешно перемещена в Исправленные')->send();
     }
 
     public static function getPages(): array

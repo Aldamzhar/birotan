@@ -17,17 +17,25 @@ class SongsResource extends Resource
 {
     protected static ?string $model = Songs::class;
 
+    protected static ?string $navigationLabel = 'БірОтан әуені';
+
+    protected static ?string $label = 'БірОтан әуені';
+
+    protected static ?string $pluralModelLabel = 'БірОтан әуені';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')->required()->maxLength(255),
-                Forms\Components\Textarea::make('description'),
-                Forms\Components\TextInput::make('author_name')->required()->maxLength(255),
-                Forms\Components\DatePicker::make('publication_date'),
-                Forms\Components\TextInput::make('youtube_link')
+                Forms\Components\TextInput::make('title')->label('Название')->required()->maxLength(255),
+                Forms\Components\Textarea::make('description')->label('Описание'),
+                Forms\Components\TextInput::make('author_name')->label('Имя автора')->required()->maxLength(255),
+                Forms\Components\DatePicker::make('publication_date')->label('Дата публикации'),
+                Forms\Components\TextInput::make('youtube_link')->label('Youtube-ссылка')
             ]);
     }
 
@@ -35,11 +43,11 @@ class SongsResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->searchable(),
-                Tables\Columns\TextColumn::make('description')->searchable(),
-                Tables\Columns\TextColumn::make('author_name')->searchable(),
-                Tables\Columns\TextColumn::make('publication_date')->sortable(),
-                Tables\Columns\TextColumn::make('youtube_link')
+                Tables\Columns\TextColumn::make('title')->label('Название')->searchable(),
+                Tables\Columns\TextColumn::make('description')->label('Описание')->searchable(),
+                Tables\Columns\TextColumn::make('author_name')->label('Имя автора')->searchable(),
+                Tables\Columns\TextColumn::make('publication_date')->label('Дата публикации')->sortable(),
+                Tables\Columns\TextColumn::make('youtube_link')->label('Youtube-ссылка')
             ])
             ->filters([
                 //

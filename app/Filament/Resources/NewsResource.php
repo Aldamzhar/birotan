@@ -16,17 +16,25 @@ class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
 
+    protected static ?string $navigationLabel = 'Tech+жаңалық';
+
+    protected static ?string $label = 'Tech+жаңалық';
+
+    protected static ?string $pluralModelLabel = 'Tech+жаңалық';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')->required()->maxLength(255),
-                Forms\Components\Textarea::make('description'),
-                Forms\Components\TextInput::make('author_name')->required()->maxLength(255),
-                Forms\Components\DatePicker::make('publication_date'),
-                Forms\Components\FileUpload::make('img')
+                Forms\Components\TextInput::make('title')->label('Название')->required()->maxLength(255),
+                Forms\Components\Textarea::make('description')->label('Описание'),
+                Forms\Components\TextInput::make('author_name')->label('Имя автора')->required()->maxLength(255),
+                Forms\Components\DatePicker::make('publication_date')->label('Дата публикации'),
+                Forms\Components\FileUpload::make('img')->label('Картинка')
             ]);
     }
 
@@ -34,11 +42,11 @@ class NewsResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->searchable(),
-                Tables\Columns\TextColumn::make('description')->searchable(),
-                Tables\Columns\TextColumn::make('author_name')->searchable(),
-                Tables\Columns\TextColumn::make('publication_date')->sortable(),
-                Tables\Columns\ImageColumn::make('img')
+                Tables\Columns\TextColumn::make('title')->label('Название')->searchable(),
+                Tables\Columns\TextColumn::make('description')->label('Описание')->searchable(),
+                Tables\Columns\TextColumn::make('author_name')->label('Имя автора')->searchable(),
+                Tables\Columns\TextColumn::make('publication_date')->label('Дата публикации')->sortable(),
+                Tables\Columns\ImageColumn::make('img')->label('Картинка')
                 ])
             ->filters([
                 //

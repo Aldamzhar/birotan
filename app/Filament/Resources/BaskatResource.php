@@ -17,13 +17,21 @@ class BaskatResource extends Resource
 {
     protected static ?string $model = Baskat::class;
 
+    protected static ?string $label = 'Баскат';
+
+    protected static ?string $pluralModelLabel = 'Баскат';
+
+    protected static ?string $navigationLabel = 'Баскат';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('word')->required()->maxLength(255),
+                Forms\Components\TextInput::make('word')->label('Слово')->required()->maxLength(255),
             ]);
     }
 
@@ -31,7 +39,7 @@ class BaskatResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('word')->searchable(),
+                Tables\Columns\TextColumn::make('word')->label('Слово')->searchable(),
             ])
             ->filters([
                 //

@@ -16,10 +16,7 @@ class ListBaskats extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
-            ImportAction::make('Импорт')->fields([
-                ImportField::make('word')->required()
-            ])->uniqueField('word')
+            Actions\CreateAction::make()
         ];
     }
 }

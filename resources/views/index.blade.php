@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="/storage/img_4.png">
     <title>BirOtan</title>
 </head>
 
@@ -59,10 +60,27 @@
     }
 
     .menu-item {
+        display: inline-block; /* Sets the element's display to inline-block */
+        text-align: center; /* Centers the content inside the anchor */
+        vertical-align: top; /* Aligns the anchor with the top of the line */
+        /*display: flex; !* Enables flexbox *!*/
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        height: 100%; /* You might need to adjust this */
         text-decoration: none;
         color: #444;
         margin: 0 10px;
-        font-size: 14px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .menu-item img {
+        max-width: 100%; /* Ensures the image is not bigger than the container */
+        height: auto; /* Maintains the aspect ratio */
+        width: auto; /* Sets the image width to auto */
+        /*height: auto; !* Sets the image height to auto *!*/
+        max-height: 60px; /* Adjust the max-height to match the surrounding elements */
+        vertical-align: top; /* Aligns the image with the top of the line */
     }
 
     h1 {
@@ -73,15 +91,6 @@
 
     .menu-item:hover {
         text-decoration: underline;
-    }
-
-    .menu-item img {
-        max-width: 100%; /* Ensures the image is not bigger than the container */
-        height: auto; /* Maintains the aspect ratio */
-        width: auto; /* Sets the image width to auto */
-        /*height: auto; !* Sets the image height to auto *!*/
-        max-height: 50px; /* Adjust the max-height to match the surrounding elements */
-        vertical-align: top; /* Aligns the image with the top of the line */
     }
 
     .footer {

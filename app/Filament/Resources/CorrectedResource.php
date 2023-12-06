@@ -21,13 +21,21 @@ class CorrectedResource extends Resource
 {
     protected static ?string $model = Corrected::class;
 
+    protected static ?string $navigationLabel = 'Исправленные';
+
+    protected static ?string $label = 'Исправленные';
+
+    protected static ?string $pluralModelLabel = 'Исправленные';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('word')->required()->maxLength(255),
+                Forms\Components\TextInput::make('word')->label('Слово')->required()->maxLength(255),
             ]);
     }
 
@@ -35,7 +43,7 @@ class CorrectedResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('word')->searchable(),
+                Tables\Columns\TextColumn::make('word')->label('Слово')->searchable(),
             ])
             ->filters([
                 //
@@ -43,7 +51,7 @@ class CorrectedResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('move')
-                    ->label('Move to Baskat')
+                    ->label('Переместить в Баскат')
                     ->action(fn (Corrected $record) => static::moveRow($record))
                     ->requiresConfirmation()
             ])
@@ -51,7 +59,7 @@ class CorrectedResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\BulkAction::make('move-all')
-                        ->label('Move all to Baskats')
+                        ->label('Переместить все записи в Баскат')
                         ->action(function ($records) {
                             static::moveAllRows($records);
                         })
@@ -73,7 +81,7 @@ class CorrectedResource extends Resource
         });
 
         // Optionally, you can add a success message
-        Notification::make('success')->title('Record moved successfully to Baskat.')->send();
+        Notification::make('success')->title('Запись успешно перемещена в Баскат')->send();
     }
 
     public static function moveAllRows($records): void
@@ -89,7 +97,7 @@ class CorrectedResource extends Resource
         });
 
         Notification::make()
-            ->title('All records moved successfully to Baskat.')
+            ->title('Все записи успешно перемещены в Баскат')
             ->success()
             ->send();
     }
