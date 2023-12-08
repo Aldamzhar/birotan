@@ -111,9 +111,9 @@
         align-items: center; /* Centers vertically */
         height: 100%; /* You might need to adjust this */
         text-decoration: none;
-        color: #444;
+        color: black;
         margin: 0 10px;
-        font-size: 18px;
+        font-size: 22px;
         font-weight: bold;
     }
 
@@ -406,7 +406,7 @@
 
         var sourceHTML = header +
             `<b>Пайдаланушының аты:</b> ${username}<br><b>Мәтіннің аты:</b> ${textTitle}` +
-            `<<br>><br><b>БОЛ:<br></b> ${results.bol}<br><br><b>Сөздер мен қайталану:<br></b> ${results.wordRepetition}` +
+            `<br><br><b>БОЛ:<br></b> ${results.bol}<br><br><b>Сөздер мен қайталану:<br></b> ${results.wordRepetition}` +
             `<br><br><b>Жаңа + қате сөздер:<br></b> ${results.errorWords}` + footer;
 
         var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);

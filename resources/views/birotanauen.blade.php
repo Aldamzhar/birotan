@@ -25,10 +25,11 @@
         @foreach($videos as $video)
             <div class="video-item">
                 <div class="video-thumbnail">
-                    <img src="{{ $video->getYouTubeThumbnailUrl($video->youtube_link) }}" alt="{{ $video->title }}">
+                    <iframe width="360" height="215" src="{{ str_replace('watch?v=', 'embed/', $video->youtube_link) }}" title="{{ $video->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{{--                    <img src="{{ $video->getYouTubeThumbnailUrl($video->youtube_link) }}" alt="{{ $video->title }}">--}}
                 </div>
                 <div class="video-info">
-                    <h3 class="video-title">{{ $video->title }}</h3>
+                    <h3 class="video-title"><a href="{{ $video->youtube_link }}" target="_blank">{{ $video->title }}</a></h3>
                     <div class="video-meta">
                         <p>{{ \Carbon\Carbon::parse($video->publication_date)->format('d/m/Y') }}</p>
                         <p>{{ $video->author_name }}</p>
@@ -120,9 +121,9 @@
         align-items: center; /* Centers vertically */
         height: 100%; /* You might need to adjust this */
         text-decoration: none;
-        color: #444;
+        color: black;
         margin: 0 10px;
-        font-size: 18px;
+        font-size: 22px;
         font-weight: bold;
     }
 

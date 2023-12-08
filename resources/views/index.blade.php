@@ -68,9 +68,9 @@
         align-items: center; /* Centers vertically */
         height: 100%; /* You might need to adjust this */
         text-decoration: none;
-        color: #444;
+        color: black;
         margin: 0 10px;
-        font-size: 18px;
+        font-size: 22px;
         font-weight: bold;
     }
 
