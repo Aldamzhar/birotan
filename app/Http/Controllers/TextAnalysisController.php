@@ -76,14 +76,35 @@ class TextAnalysisController extends Controller
     {
         $words = $this->getWordsList($request);
         $totalWords = count($words);
-        $uniqueWords = count(array_unique($words));
-        $percentageUnique = ($uniqueWords / $totalWords) * 100;
+        $wordFrequencies = array_count_values($words);
+
+        $uniquenessRange = $this->calculateUniquenessRange($totalWords);
+
+        $uniqueWords = array_filter($wordFrequencies, function ($frequency) use ($uniquenessRange) {
+            return $frequency >= $uniquenessRange[0] && $frequency <= $uniquenessRange[1];
+        });
+
+        $uniqueWordCount = count($uniqueWords);
+        $percentageUnique = ($uniqueWordCount / $totalWords) * 100;
 
         return response()->json([
             'totalWords' => $totalWords,
-            'uniqueWords' => $uniqueWords,
+            'uniqueWords' => $uniqueWordCount,
             'percentageUnique' => $percentageUnique,
         ]);
+    }
+
+    private function calculateUniquenessRange($totalWords): array
+    {
+        if ($totalWords <= 500) {
+            return [1, 3];
+        } else if ($totalWords <= 1000) {
+            return [1, 5];
+        } else if ($totalWords <= 3000) {
+            return [1, 10];
+        } else if ($totalWords <= 5000) {
+            return [1,20];
+        }
     }
 
     public function wordRepetitions(Request $request) {
