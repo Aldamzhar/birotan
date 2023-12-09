@@ -66,7 +66,7 @@ class TextAnalysisController extends Controller
         $words = preg_split("/[\s,.;]+/", $text);
         $words = $this->transliterateToKazakh($words);
         $filteredWords = array_filter($words, function($word) {
-            return preg_match('/[аәбвгғдеёжзийкқлмнңоөпрстуұүфхһцчшщъыіьэюя]/u', $word);
+            return !preg_match('/[a-zA-Z]/', $word);
         });
         return KazakhSorterTrait::sort($filteredWords);
 
@@ -78,21 +78,31 @@ class TextAnalysisController extends Controller
         $totalWords = count($words);
         $wordFrequencies = array_count_values($words);
 
+        // Calculate the uniqueness range.
         $uniquenessRange = $this->calculateUniquenessRange($totalWords);
 
-        $uniqueWords = array_filter($wordFrequencies, function ($frequency) use ($uniquenessRange) {
-            return $frequency >= $uniquenessRange[0] && $frequency <= $uniquenessRange[1];
-        });
+        // Filter the word frequencies to get only unique words, excluding English words.
+        $uniqueWords = array_filter($wordFrequencies, function ($frequency, $word) use ($uniquenessRange) {
+            return $frequency >= $uniquenessRange[0] && $frequency <= $uniquenessRange[1] && !preg_match('/[a-zA-Z]/', $word);
+        }, ARRAY_FILTER_USE_BOTH);
 
+        // Recalculate total words excluding English words.
+        $wordsExcludingEnglish = array_filter($words, function ($word) {
+            return !preg_match('/[a-zA-Z]/', $word);
+        });
+        $totalWordsExcludingEnglish = count($wordsExcludingEnglish);
+
+        // Calculate the unique word count and the percentage of unique words.
         $uniqueWordCount = count($uniqueWords);
-        $percentageUnique = ($uniqueWordCount / $totalWords) * 100;
+        $percentageUnique = $totalWordsExcludingEnglish > 0 ? ($uniqueWordCount / $totalWordsExcludingEnglish) * 100 : 0;
 
         return response()->json([
-            'totalWords' => $totalWords,
+            'totalWords' => $totalWordsExcludingEnglish,
             'uniqueWords' => $uniqueWordCount,
             'percentageUnique' => $percentageUnique,
         ]);
     }
+
 
     private function calculateUniquenessRange($totalWords): array
     {

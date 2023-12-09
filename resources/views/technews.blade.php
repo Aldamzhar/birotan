@@ -65,7 +65,7 @@
 </div>
 </body>
 
-@include('footer')
+{{--@include('footer')--}}
 
 </html>
 
@@ -83,7 +83,7 @@
         justify-content: space-between;
         align-items: center;
         background-color: white;
-        padding: 10px 30px;
+        padding: 10px 0;
         box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
     }
 
@@ -95,6 +95,9 @@
 
     .menu-item {
         display: inline-block; /* Sets the element's display to inline-block */
+        white-space: nowrap; /* Prevents the text from wrapping */
+        overflow: hidden; /* Keeps the content from spilling out */
+        text-overflow: ellipsis; /* Adds an ellipsis if the text is too long to fit */
         text-align: center; /* Centers the content inside the anchor */
         vertical-align: top; /* Aligns the anchor with the top of the line */
         /*display: flex; !* Enables flexbox *!*/
@@ -102,9 +105,9 @@
         align-items: center; /* Centers vertically */
         height: 100%; /* You might need to adjust this */
         text-decoration: none;
-        color: black;
+        color: #2A0FA9;
         margin: 0 10px;
-        font-size: 22px;
+        font-size: 25px;
         font-weight: bold;
     }
 
@@ -113,7 +116,7 @@
         height: auto; /* Maintains the aspect ratio */
         width: auto; /* Sets the image width to auto */
         /*height: auto; !* Sets the image height to auto *!*/
-        max-height: 60px; /* Adjust the max-height to match the surrounding elements */
+        max-height: 90px; /* Adjust the max-height to match the surrounding elements */
         vertical-align: top; /* Aligns the image with the top of the line */
     }
 

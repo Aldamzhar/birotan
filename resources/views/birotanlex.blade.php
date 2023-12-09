@@ -52,7 +52,7 @@
     <button id="downloadButton">Нәтижелерді жүктеу</button>
 </div>
 
-@include('footer')
+{{--@include('footer')--}}
 
 
 
@@ -82,7 +82,7 @@
         justify-content: space-between;
         align-items: center;
         background-color: white;
-        padding: 10px 30px;
+        padding: 10px 0;
         box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
     }
 
@@ -104,6 +104,9 @@
 
     .menu-item {
         display: inline-block; /* Sets the element's display to inline-block */
+        white-space: nowrap; /* Prevents the text from wrapping */
+        overflow: hidden; /* Keeps the content from spilling out */
+        text-overflow: ellipsis; /* Adds an ellipsis if the text is too long to fit */
         text-align: center; /* Centers the content inside the anchor */
         vertical-align: top; /* Aligns the anchor with the top of the line */
         /*display: flex; !* Enables flexbox *!*/
@@ -111,9 +114,9 @@
         align-items: center; /* Centers vertically */
         height: 100%; /* You might need to adjust this */
         text-decoration: none;
-        color: black;
+        color: #2A0FA9;
         margin: 0 10px;
-        font-size: 22px;
+        font-size: 25px;
         font-weight: bold;
     }
 
@@ -122,7 +125,7 @@
         height: auto; /* Maintains the aspect ratio */
         width: auto; /* Sets the image width to auto */
         /*height: auto; !* Sets the image height to auto *!*/
-        max-height: 60px; /* Adjust the max-height to match the surrounding elements */
+        max-height: 90px; /* Adjust the max-height to match the surrounding elements */
         vertical-align: top; /* Aligns the image with the top of the line */
     }
 
@@ -146,6 +149,7 @@
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
+        min-height: 500px;
     }
 
     textarea {
@@ -154,7 +158,7 @@
         /*padding: 10px;*/
         font-size: 14px;
         width: 100%;
-        height: 200px; /* adjust as needed */
+        height: 400px; /* adjust as needed */
         resize: none;
     }
 
@@ -184,7 +188,7 @@
         /*padding: 10px;*/
         font-size: 14px;
         width: 100%;
-        height: 200px; /* Adjust as needed */
+        height: 400px; /* Adjust as needed */
         overflow: auto;
         background-color: #fff;
         /*margin-top: 35px;*/
@@ -369,13 +373,14 @@
                 .then(wordsNotInBaskats => {
                     console.log('Words not in Baskat:', wordsNotInBaskats);
                     const punctuation = /[.,/#!?«»$%^&*;:{}=-\_`~()]/g;
+                    const englishOrNumber = /^[A-Za-z0-9]+$/; // Regular expression for English words or numbers
                     const words = text.split(/\s+/);
                     const formattedText = words.map(word => {
                         // Remove punctuation from the beginning and end of the word for checking
                         const cleanWord = word.replace(punctuation, '');
 
-                        // Check if the cleaned word is in the list of words not in Baskat
-                        if (wordsNotInBaskats.includes(cleanWord)) {
+                        // Check if the cleaned word is in the list of words not in Baskat and not English or a number
+                        if (wordsNotInBaskats.includes(cleanWord) && !englishOrNumber.test(cleanWord)) {
                             // Wrap the original word (with punctuation) in a span with class for styling
                             return `<span class="not-in-baskat">${word}</span>`;
                         } else {
@@ -392,6 +397,7 @@
                     console.error('Error:', error);
                 });
         });
+
     });
         // Your jsPDF related code here
     function downloadWordDocument() {

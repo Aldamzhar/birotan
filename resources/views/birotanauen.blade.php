@@ -25,16 +25,21 @@
         @foreach($videos as $video)
             <div class="video-item">
                 <div class="video-thumbnail">
-                    <iframe width="360" height="215" src="{{ str_replace('watch?v=', 'embed/', $video->youtube_link) }}" title="{{ $video->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-{{--                    <img src="{{ $video->getYouTubeThumbnailUrl($video->youtube_link) }}" alt="{{ $video->title }}">--}}
+                    <iframe src="{{ str_replace('watch?v=', 'embed/', $video->youtube_link) }}" title="{{ $video->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    {{--                    <img src="{{ $video->getYouTubeThumbnailUrl($video->youtube_link) }}" alt="{{ $video->title }}">--}}
                 </div>
                 <div class="video-info">
-                    <h3 class="video-title"><a href="{{ $video->youtube_link }}" target="_blank">{{ $video->title }}</a></h3>
-                    <div class="video-meta">
-                        <p>{{ \Carbon\Carbon::parse($video->publication_date)->format('d/m/Y') }}</p>
-                        <p>{{ $video->author_name }}</p>
+{{--                    <h3 class="video-title">{{ $video->title }}</h3>--}}
+{{--                    <div class="video-meta">--}}
+{{--                        <p>{{ \Carbon\Carbon::parse($video->publication_date)->format('d/m/Y') }}</p>--}}
+{{--                        <p>{{ $video->author_name }}</p>--}}
 {{--                        <p>{{ $video->description }}</p>--}}
-                    </div>
+{{--                    </div>--}}
+                    <p class="video-meta">
+                        <span class="video-title">{{ $video->title }},</span>
+                        <span>{{ $video->author_name }}</span>
+                        <span>/ {{ \Carbon\Carbon::parse($video->publication_date)->format('d.m.Y') }}</span>
+                    </p>
                 </div>
             </div>
         @endforeach
@@ -45,7 +50,7 @@
 </main>
 </body>
 
-@include('footer')
+{{--@include('footer')--}}
 
 </html>
 
@@ -55,13 +60,25 @@
         margin: 0;
         padding: 0;
         background-color: tan;
+        overflow: hidden;
+        height: 100%; /* Full height for the scrollable body */
+    }
 
+    html {
+        height: 100%; /* Full height for the scrollable body */
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Prevent the main scrollbar */
     }
 
     main {
         /*padding-top: 70px; !* Account for the fixed header *!*/
-        padding-bottom: 200px;
+        /*padding-bottom: 200px;*/
         background-color: tan;
+        padding-top: 70px; /* This should be equal or more than the header's height */
+        height: calc(100% - 70px); /* Remaining height, assuming header is 70px tall */
+        overflow-y: auto; /* Enable scrolling for the main content */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
     }
 
     header {
@@ -69,8 +86,13 @@
         justify-content: space-between;
         align-items: center;
         background-color: white;
-        padding: 10px 30px;
+        padding: 10px 0;
         box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+        position: fixed; /* Fix the header at the top */
+        top: 0;
+        left: 0;
+        width: 100%; /* Full width */
+        z-index: 100; /* Ensure it's above other content */
     }
 
 
@@ -114,6 +136,9 @@
 
     .menu-item {
         display: inline-block; /* Sets the element's display to inline-block */
+        white-space: nowrap; /* Prevents the text from wrapping */
+        overflow: hidden; /* Keeps the content from spilling out */
+        text-overflow: ellipsis; /* Adds an ellipsis if the text is too long to fit */
         text-align: center; /* Centers the content inside the anchor */
         vertical-align: top; /* Aligns the anchor with the top of the line */
         /*display: flex; !* Enables flexbox *!*/
@@ -121,9 +146,9 @@
         align-items: center; /* Centers vertically */
         height: 100%; /* You might need to adjust this */
         text-decoration: none;
-        color: black;
-        margin: 0 10px;
-        font-size: 22px;
+        color: #2A0FA9;
+        margin: 0 20px;
+        font-size: 25px;
         font-weight: bold;
     }
 
@@ -132,7 +157,7 @@
         height: auto; /* Maintains the aspect ratio */
         width: auto; /* Sets the image width to auto */
         /*height: auto; !* Sets the image height to auto *!*/
-        max-height: 60px; /* Adjust the max-height to match the surrounding elements */
+        max-height: 90px; /* Adjust the max-height to match the surrounding elements */
         vertical-align: top; /* Aligns the image with the top of the line */
     }
 
@@ -162,39 +187,99 @@
         color: #333; /* Description text color */
     }
 
-    .video-item {
-        display: flex; /* Align thumbnail and info side by side */
-        /*background-color: #fff; !* White background *!*/
-        border-radius: 4px; /* Rounded corners */
-        overflow: hidden; /* Ensures the content fits within the borders */
-        /*box-shadow: 0 2px 5px rgba(0,0,0,0.2); !* Adds a subtle shadow *!*/
-        font-family: Arial, sans-serif; /* Sets the font */
-        margin: 20px; /* Adds space between video items */
+    .videos-list {
+        margin-top: 50px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Creates two columns */
+        grid-gap: 20px; /* Adjust the gap as needed */
+        padding: 20px;
+        /* If you want a fixed height with scrolling, uncomment these */
+        /* height: 500px; */
+        /* overflow-y: scroll;*/
     }
 
-    .video-thumbnail img {
-        width: 150px; /* Sets a fixed width for the image */
-        height: 100px; /* Sets a fixed height for the image */
-        object-fit: cover; /* Ensures the image covers the area */
+    .video-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /*margin: 20px;*/
+        margin-bottom: 20px;
+        border-radius: 4px;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        /* Set width to 100% for responsive design, or set a fixed width */
+        width: 100%; /* Full width of the column */
+        position: relative; /* Establish a positioning context */
+        /*width: 100%; !* Full width of the grid column *!*/
+        /*padding-top: 56.25%; !* Aspect ratio padding hack (16:9 aspect ratio) *!*/
+    }
+
+    .video-thumbnail {
+        position: relative; /* Position absolutely inside .video-item */
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 aspect ratio, adjust if your aspect ratio is different */
+        /*position: relative;*/
+        overflow: hidden; /* Hide anything outside the bounds */
+    }
+
+    .video-thumbnail iframe {
+        width: 100%; /* Full width of the video-item */
+        /* Maintain the aspect ratio of 16:9 for the iframe */
+        height: 100%;
+        position: absolute; /* Position absolutely to fill the parent */
+        top: 0;
+        left: 0;
     }
 
     .video-info {
-        padding: 10px; /* Adds padding inside the video info area */
+        /*padding: 10px; !* Adds padding inside the video info area *!*/
         display: flex;
         flex-direction: column; /* Stack the title and meta information */
         justify-content: center; /* Center the content vertically */
+        /*width: 100%; !* Ensure info section takes full width of .video-item *!*/
+        /*padding: 10px; !* Add padding for spacing *!*/
+        /*text-align: center; !* Center-align the text *!*/
+        padding: 10px 0;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .video-title {
-        margin: 0; /* Removes default margin */
+        margin-right: 2px; /* Removes default margin */
         color: #333; /* Dark text for title */
         font-size: 18px; /* Larger font size for the title */
         font-weight: bold; /* Makes the title bold */
     }
 
     .video-meta {
-        font-size: 14px; /* Smaller font size for meta information */
-        color: #666; /* Lighter text for meta information */
+        /*font-size: 14px; !* Smaller font size for meta information *!*/
+        /*color: #666; !* Lighter text for meta information *!*/
+        /*display: flex; !* This will keep your items in line *!*/
+        flex-wrap: wrap; /* Allows the items to wrap to the next line if needed */
+        justify-content: center; /* Center the content */
+        align-items: baseline; /* Aligns items along the baseline for a consistent look */
+        gap: 4px; /* Adds a small space between your spans, adjust as needed */
+        display: block; /* Change from flex to block if you want the text underneath and centered */
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .video-meta span {
+        white-space: nowrap; /* Prevents breaking the span into multiple lines */
+        color: #2A0FA9; /* Dark text for title */
+        font-size: 18px; /* Larger font size for the title */
+        font-weight: bold; /* Makes the title bold */
+        display: inline; /* Keep these inline for proper formatting */
+        /*white-space: nowrap;*/
     }
 
     .video-meta p {

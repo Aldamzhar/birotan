@@ -21,6 +21,9 @@
 <video autoplay muted loop id="myBackgroundVideo">
     <source src="{{ asset('storage/background.mp4') }}" type="video/mp4">
 </video>
+<div id="textBox" style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); color: #FFFFFF; text-shadow: 5px 5px 3px #2A0FA9; font-size: 2em; font-weight: bold; font-family: 'Arial', sans-serif; background-color: rgba(0, 0, 0, 0); padding: 10px;">
+    Бір ел, Бір ұлт, Бір мақсат!
+</div>
 </body>
 
 
@@ -55,12 +58,15 @@
         justify-content: space-between;
         align-items: center;
         background-color: white;
-        padding: 10px 30px;
+        padding: 10px 0;
         box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
     }
 
     .menu-item {
         display: inline-block; /* Sets the element's display to inline-block */
+        white-space: nowrap; /* Prevents the text from wrapping */
+        overflow: hidden; /* Keeps the content from spilling out */
+        text-overflow: ellipsis; /* Adds an ellipsis if the text is too long to fit */
         text-align: center; /* Centers the content inside the anchor */
         vertical-align: top; /* Aligns the anchor with the top of the line */
         /*display: flex; !* Enables flexbox *!*/
@@ -68,9 +74,9 @@
         align-items: center; /* Centers vertically */
         height: 100%; /* You might need to adjust this */
         text-decoration: none;
-        color: black;
+        color: #2A0FA9;
         margin: 0 10px;
-        font-size: 22px;
+        font-size: 25px;
         font-weight: bold;
     }
 
@@ -79,7 +85,7 @@
         height: auto; /* Maintains the aspect ratio */
         width: auto; /* Sets the image width to auto */
         /*height: auto; !* Sets the image height to auto *!*/
-        max-height: 60px; /* Adjust the max-height to match the surrounding elements */
+        max-height: 90px; /* Adjust the max-height to match the surrounding elements */
         vertical-align: top; /* Aligns the image with the top of the line */
     }
 
