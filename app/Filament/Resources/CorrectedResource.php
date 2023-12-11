@@ -16,6 +16,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class CorrectedResource extends Resource
 {
@@ -65,6 +66,7 @@ class CorrectedResource extends Resource
                         })
                         ->requiresConfirmation()
                 ]),
+                ExportBulkAction::make()
             ]);
     }
 
@@ -76,7 +78,9 @@ class CorrectedResource extends Resource
 
             $destinationData = $record->toArray();
             // Assuming DestinationModel is the model for the destination table
-            Baskat::create($destinationData);
+            if ($destinationData) {
+                Baskat::firstOrCreate(['word' => $destinationData['word']], $destinationData);
+            }
             $record->delete();
         });
 
@@ -90,7 +94,9 @@ class CorrectedResource extends Resource
             foreach ($records as $record) {
                 if ($record) {
                     $destinationData = $record->toArray();
-                    Baskat::create($destinationData);
+                    if ($destinationData) {
+                        Baskat::firstOrCreate(['word' => $destinationData['word']], $destinationData);
+                    }
                     $record->delete();
                 }
             }

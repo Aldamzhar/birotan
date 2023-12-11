@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class BaskatResource extends Resource
 {
@@ -41,6 +42,7 @@ class BaskatResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('word')->label('Слово')->searchable(),
             ])
+            ->defaultSort('word')
             ->filters([
                 //
             ])
@@ -51,6 +53,7 @@ class BaskatResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+                ExportBulkAction::make()
             ]);
     }
 

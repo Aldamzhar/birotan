@@ -19,11 +19,11 @@
 </header>
 <body>
 <video autoplay muted loop id="myBackgroundVideo">
-    <source src="{{ asset('storage/background.mp4') }}" type="video/mp4">
+    <source src="{{ asset('storage/Background.mp4') }}" type="video/mp4">
 </video>
-<div id="textBox" style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); color: #FFFFFF; text-shadow: 5px 5px 3px #2A0FA9; font-size: 2em; font-weight: bold; font-family: 'Arial', sans-serif; background-color: rgba(0, 0, 0, 0); padding: 10px;">
-    Бір ел, Бір ұлт, Бір мақсат!
-</div>
+{{--<div id="textBox" style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); color: #FFFFFF; text-shadow: 5px 5px 3px #2A0FA9; font-size: 2em; font-weight: bold; font-family: 'Arial', sans-serif; background-color: rgba(0, 0, 0, 0); padding: 10px;">--}}
+{{--    Бір ел, Бір ұлт, Бір мақсат!--}}
+{{--</div>--}}
 </body>
 
 

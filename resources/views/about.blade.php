@@ -100,7 +100,7 @@
 
     main {
         padding-top: 70px; /* Account for the fixed header */
-        padding-bottom: 85px;
+        /*padding-bottom: 85px;*/
         background-color: tan;
     }
 
@@ -132,6 +132,8 @@
         text-align: center; /* Centering the text below the image */
         max-width: 90%; /* To ensure the text doesn't stretch too wide */
         color: #0277BD;
+        /*font-weight: bold;*/
+        /*font-size: 25px;*/
     }
 
 

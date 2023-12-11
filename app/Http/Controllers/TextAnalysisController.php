@@ -63,7 +63,7 @@ class TextAnalysisController extends Controller
         ]);
 
         $text = $request->input('text');
-        $words = preg_split("/[\s,.;]+/", $text);
+        $words = preg_split("/[\s,.;:]+/", $text);
         $words = $this->transliterateToKazakh($words);
         $filteredWords = array_filter($words, function($word) {
             return !preg_match('/[a-zA-Z]/', $word);
@@ -97,7 +97,7 @@ class TextAnalysisController extends Controller
         $percentageUnique = $totalWordsExcludingEnglish > 0 ? ($uniqueWordCount / $totalWordsExcludingEnglish) * 100 : 0;
 
         return response()->json([
-            'totalWords' => $totalWordsExcludingEnglish,
+            'totalWords' => $totalWords,
             'uniqueWords' => $uniqueWordCount,
             'percentageUnique' => $percentageUnique,
         ]);

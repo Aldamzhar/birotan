@@ -33,6 +33,7 @@ class NewsResource extends Resource
                 Forms\Components\TextInput::make('title')->label('Название')->required()->maxLength(255),
                 Forms\Components\Textarea::make('description')->label('Описание'),
                 Forms\Components\TextInput::make('author_name')->label('Имя автора')->required()->maxLength(255),
+                Forms\Components\TextInput::make('link')->label('Ссылка на новость'),
                 Forms\Components\DatePicker::make('publication_date')->label('Дата публикации'),
                 Forms\Components\FileUpload::make('img')->label('Картинка')
             ]);
@@ -45,6 +46,7 @@ class NewsResource extends Resource
                 Tables\Columns\TextColumn::make('title')->label('Название')->searchable(),
                 Tables\Columns\TextColumn::make('description')->label('Описание')->searchable(),
                 Tables\Columns\TextColumn::make('author_name')->label('Имя автора')->searchable(),
+                Tables\Columns\TextColumn::make('link')->label('Ссылка на новость')->searchable(),
                 Tables\Columns\TextColumn::make('publication_date')->label('Дата публикации')->sortable(),
                 Tables\Columns\ImageColumn::make('img')->label('Картинка')
                 ])

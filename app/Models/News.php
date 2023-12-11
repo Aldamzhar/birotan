@@ -14,6 +14,7 @@ class News extends Model
         'title',
         'publication_date',
         'author_name',
-        'description'
+        'description',
+        'link'
     ];
 }

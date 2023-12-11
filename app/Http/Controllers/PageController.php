@@ -30,7 +30,7 @@ class PageController extends Controller
 
     public function birotanauen()
     {
-        $videos = Songs::all();
+        $videos = Songs::all()->sortByDesc('publication_date');
         return view('birotanauen', ['videos' => $videos]);
     }
 
@@ -43,6 +43,6 @@ class PageController extends Controller
 
         // The paginate method automatically handles totalResults and other pagination details
 
-        return view('technews', ['newsItems' => $paginatedNewsItems]);
+        return view('technews', ['newsItems' => News::all()]);
     }
 }

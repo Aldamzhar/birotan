@@ -24,44 +24,15 @@
                     <img src="{{ \Illuminate\Support\Facades\Storage::url($article['img']) }}" alt="{{ $article['title'] }}">
                 </div>
                 <div class="news-text">
-                    <h2 class="news-title">{{ $article['title'] }}</h2>
+                    <h2 class="news-title">
+                        <a href="{{ $article['link'] }}" target="_blank">{{ $article['title'] }}</a>
+                    </h2>
                     <p class="news-meta">{{ (new DateTime($article['publishedAt']))->format('d/m/Y') }} | {{ $article['author_name'] }}</p>
-{{--                    <p class="news-description">{{ $article['description'] }}</p>--}}
+                    <p class="news-description">{{ $article['description'] }}</p>
                 </div>
             </div>
         @endforeach
     </div>
-@if ($newsItems->lastPage() > 1)
-    <ul class="pagination">
-        <!-- Previous Page Link -->
-        <li class="{{ ($newsItems->onFirstPage()) ? 'disabled' : '' }}">
-            <a href="{{ $newsItems->previousPageUrl() }}">&laquo;</a>
-        </li>
-
-        <!-- Pagination Elements -->
-        <!-- "Three Dots" Separator -->
-        @if($newsItems->currentPage() > 3)
-            <li class="disabled"><span>...</span></li>
-        @endif
-
-    <!-- Array Of Links -->
-        @for($i = max($newsItems->currentPage() - 2, 1); $i <= min(max($newsItems->currentPage() - 2, 1) + 4, $newsItems->lastPage()); $i++)
-            <li class="{{ ($newsItems->currentPage() == $i) ? ' active' : '' }}">
-                <a href="{{ $newsItems->url($i) }}">{{ $i }}</a>
-            </li>
-        @endfor
-
-    <!-- "Three Dots" Separator -->
-        @if($newsItems->currentPage() < $newsItems->lastPage() - 3)
-            <li class="disabled"><span>...</span></li>
-    @endif
-
-    <!-- Next Page Link -->
-        <li class="{{ ($newsItems->currentPage() == $newsItems->lastPage()) ? 'disabled' : '' }}">
-            <a href="{{ $newsItems->nextPageUrl() }}">&raquo;</a>
-        </li>
-    </ul>
-@endif
 </div>
 </body>
 
@@ -91,6 +62,12 @@
         font-size: 35px;
         color: #0277BD; /* Change this color to match your design */
         margin: 0;
+    }
+
+    .news-title a {
+        color: #2A0FA9;
+        cursor: pointer;
+        text-decoration: underline;
     }
 
     .menu-item {
@@ -124,59 +101,53 @@
         text-decoration: underline;
     }
     .main-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: flex; /* Use flexbox for layout */
+        justify-content: space-between; /* Space between the two main columns */
+        align-items: flex-start; /* Align columns to the start of the cross axis */
+        max-width: 1200px; /* Maximum width of the container */
+        margin: 20px auto; /* Center the container with margin */
+        padding: 20px; /* Padding around the container */
     }
 
     .news-container {
-        width: 100%;
-        max-width: 1200px; /* Adjust to your preferred max width */
-        margin-top: 20px;
-        /*margin: 0 auto; !* Center the container *!*/
+        display: flex; /* Use flexbox for layout */
+        flex-direction: column; /* Stack children vertically */
+        width: 100%; /* Full width of the container */
     }
 
     .news-item {
-        display: flex;
-        align-items: center; /* Align items vertically */
-        margin-bottom: 20px; /* Space between news items */
-        padding: 10px; /* Padding around news items */
-        /*background: #f9f9f9; !* Background color for the news item *!*/
-        border-radius: 5px; /* Rounded corners for the news item */
+        display: flex; /* Use flexbox for layout within each news item */
+        /*justify-content: space-between; !* Space between image and text *!*/
+        margin-bottom: 20px; /* Margin between news items */
     }
 
     .news-image {
-        flex: 0 0 150px; /* Adjust width as necessary */
-        height: 100px; /* Adjust height as necessary */
-        margin-right: 20px; /* Space between image and text */
-        overflow: hidden; /* In case the image is too big */
+        width: 35%; /* Width of the image container */
+
+        /*height: 48%;*/
+        margin-right: 4%; /* Space between image and text */
     }
 
     .news-image img {
-        width: 100%;
-        height: auto;
-        object-fit: cover; /* Ensures the image covers the area */
+        width: 100%; /* Make image use up all available space */
+        height: auto; /* Keep image aspect ratio */
+        object-fit: cover; /* Cover the space without stretching */
     }
 
     .news-text {
-        flex-grow: 1; /* Ensure text takes up the remaining space */
+        width: 48%; /* Width of the text container */
     }
 
     .news-title {
-        margin: 0;
-        font-size: 1.2em; /* Adjust font size as necessary */
-        color: #444; /* Title text color */
+        margin: 0 0 10px 0; /* Margin below the title */
+        font-size: 1.5em; /* Larger font size for the title */
     }
 
     .news-meta {
-        font-size: 0.9em; /* Adjust font size as necessary */
-        color: #666; /* Meta text color */
+        color: black; /* Darker color for meta text */
+        margin: 0 0 10px 0; /* Margin below the meta text */
     }
 
-    .news-description {
-        font-size: 1em; /* Adjust font size as necessary */
-        color: #333; /* Description text color */
-    }
 
 
     /* Add other styles as needed */

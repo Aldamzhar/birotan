@@ -17,6 +17,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ZhanasResource extends Resource
 {
@@ -66,6 +67,7 @@ class ZhanasResource extends Resource
                             })
                     ->requiresConfirmation()
                 ]),
+                ExportBulkAction::make()
             ]);
     }
 
