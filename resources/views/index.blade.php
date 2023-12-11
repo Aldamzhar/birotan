@@ -15,7 +15,7 @@
     <a href="{{ url('/birotanlex') }}" class="menu-item">БірОтан лексика</a>
     <a href="{{ url('/mypage') }}" class="menu-item"><img src="/storage/img_8.png"></a>
     <a href="{{ url('/technews') }}" class="menu-item">Tech + жаналық</a>
-    <a href="{{ url('/birotanauen') }}" class="menu-item">БірОтан өуені</a>
+    <a href="{{ url('/birotanauen') }}" class="menu-item">БірОтан әуені</a>
 </header>
 <body>
 <video autoplay muted loop id="myBackgroundVideo">
