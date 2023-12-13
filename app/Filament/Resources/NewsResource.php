@@ -16,11 +16,11 @@ class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
 
-    protected static ?string $navigationLabel = 'Tech+жаңалық';
+    protected static ?string $navigationLabel = 'Tech+Жаңалық';
 
-    protected static ?string $label = 'Tech+жаңалық';
+    protected static ?string $label = 'Tech+Жаңалық';
 
-    protected static ?string $pluralModelLabel = 'Tech+жаңалық';
+    protected static ?string $pluralModelLabel = 'Tech+Жаңалық';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
