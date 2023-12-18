@@ -73,33 +73,25 @@ class CorrectedResource extends Resource
     public static function moveRow(Corrected $record)
     {
         DB::transaction(function () use ($record) {
-            // Here you can include the logic to move the data
-            // Similar to the earlier provided moveRowToAnotherTable function
-
             $destinationData = $record->toArray();
-            // Assuming DestinationModel is the model for the destination table
-            if ($destinationData) {
-                Baskat::firstOrCreate(['word' => $destinationData['word']], $destinationData);
-            }
+            Baskat::firstOrCreate($destinationData);
             $record->delete();
         });
-
-        // Optionally, you can add a success message
         Notification::make('success')->title('Запись успешно перемещена в Баскат')->send();
     }
 
     public static function moveAllRows($records): void
     {
         DB::transaction(function () use ($records) {
+            $destinationData = [];
             foreach ($records as $record) {
                 if ($record) {
-                    $destinationData = $record->toArray();
-                    if ($destinationData) {
-                        Baskat::firstOrCreate(['word' => $destinationData['word']], $destinationData);
-                    }
-                    $record->delete();
+                    $data = $record->toArray();
+                    $destinationData[] = $data;
                 }
             }
+            DB::table('baskats')->insertOrIgnore($destinationData);
+            DB::table('correcteds')->truncate();
         });
 
         Notification::make()

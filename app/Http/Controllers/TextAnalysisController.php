@@ -63,14 +63,17 @@ class TextAnalysisController extends Controller
         ]);
 
         $text = $request->input('text');
-        $words = preg_split("/[\s,.;:]+/", $text);
+        // This regex splits by whitespace or punctuation, but excludes standalone hyphens/dashes surrounded by whitespace
+        $words = preg_split("/\s+|(?<!\S)[,.:;!?]+(?!\S)|(?<=\s)[-—](?=\s)/u", $text, -1, PREG_SPLIT_NO_EMPTY);
+        $words = array_map('trim', $words); // Trim each word, just in case
         $words = $this->transliterateToKazakh($words);
+        // Filter out any empty strings or strings that are just dashes
         $filteredWords = array_filter($words, function($word) {
-            return !preg_match('/[a-zA-Z]/', $word);
+            return $word !== '' && !preg_match('/^[-—]+$/u', $word);
         });
         return KazakhSorterTrait::sort($filteredWords);
-
     }
+
 
     public function analyzeText(Request $request): JsonResponse
     {
@@ -111,9 +114,9 @@ class TextAnalysisController extends Controller
         } else if ($totalWords <= 1000) {
             return [1, 5];
         } else if ($totalWords <= 3000) {
-            return [1, 10];
+            return [1, 15];
         } else if ($totalWords <= 5000) {
-            return [1,20];
+            return [1,30];
         }
     }
 

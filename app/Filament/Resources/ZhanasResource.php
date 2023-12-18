@@ -81,13 +81,15 @@ class ZhanasResource extends Resource
     public static function moveAllRows($records): void
     {
         DB::transaction(function () use ($records) {
+            $destinationData = [];
             foreach ($records as $record) {
                 if ($record) {
-                    $destinationData = $record->toArray();
-                    Corrected::create($destinationData);
-                    $record->delete();
+                    $data = $record->toArray();
+                    $destinationData[] = $data;
                 }
             }
+            DB::table('correcteds')->insertOrIgnore($destinationData);
+            DB::table('zhanas')->truncate();
         });
 
         Notification::make()
@@ -101,16 +103,10 @@ class ZhanasResource extends Resource
     public static function moveRow(Zhanas $record)
     {
         DB::transaction(function () use ($record) {
-            // Here you can include the logic to move the data
-            // Similar to the earlier provided moveRowToAnotherTable function
-
             $destinationData = $record->toArray();
-            // Assuming DestinationModel is the model for the destination table
-            Corrected::create($destinationData);
+            Corrected::firstOrCreate($destinationData);
             $record->delete();
         });
-
-        // Optionally, you can add a success message
         Notification::make('success')->title('Запись успешно перемещена в Исправленные')->send();
     }
 

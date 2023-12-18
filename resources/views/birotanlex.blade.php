@@ -270,7 +270,9 @@
         textarea.parentNode.insertBefore(errorDiv, textarea.nextSibling); // Insert the error div after the textarea
 
         textarea.addEventListener("input", function() {
-            const words = textarea.value.split(/\s+/).filter(word => word.length > 0);
+            const words = textarea.value.split(/[\s,.;:]+|(?<!\S)[,.:;!?+_/-]+(?!\S)|(?<=\s)[-–](?=\s)/)
+                                        .map(word => word.trim())
+                                        .filter(word => word.length > 0 && !/^[-–]+$/.test(word));
             const wordCount = words.length;
 
             wordCountSpan.textContent = `${wordCount}/5000`;
@@ -283,6 +285,7 @@
                 errorDiv.textContent = ''; // Clear the error message when under the limit
             }
         });
+
     });
 
 
