@@ -45,8 +45,9 @@ class ZhanasResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('word')->label('Слово')->searchable(),
+                Tables\Columns\TextColumn::make('word')->label('Слово')->searchable()->sortable(),
             ])
+            ->defaultSort('word')
             ->filters([
                 //
             ])
@@ -89,7 +90,7 @@ class ZhanasResource extends Resource
                 }
             }
             DB::table('correcteds')->insertOrIgnore($destinationData);
-            DB::table('zhanas')->truncate();
+            DB::table('zhanas')->delete();
         });
 
         Notification::make()

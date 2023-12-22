@@ -44,8 +44,9 @@ class CorrectedResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('word')->label('Слово')->searchable(),
+                Tables\Columns\TextColumn::make('word')->label('Слово')->searchable()->sortable(),
             ])
+            ->defaultSort('word')
             ->filters([
                 //
             ])
@@ -91,7 +92,7 @@ class CorrectedResource extends Resource
                 }
             }
             DB::table('baskats')->insertOrIgnore($destinationData);
-            DB::table('correcteds')->truncate();
+            DB::table('correcteds')->delete();
         });
 
         Notification::make()

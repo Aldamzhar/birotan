@@ -148,18 +148,11 @@ class TextAnalysisController extends Controller
     public function checkBaskats(Request $request)
     {
         $words = array_keys($this->wordRepetitions($request));
-        $baskatsWords = Baskat::pluck('word')->map(function ($word) {
-            return $word; // Convert each word to lowercase
-        })->all();
-
-        $wordsNotInBaskats = array_filter($words, function($word) use ($baskatsWords) {
-            return !in_array($word, $baskatsWords); // Case-insensitive comparison
-        });
-        foreach ($wordsNotInBaskats as $word) {
-            if (!Zhanas::where('word', $word)->first()) {
-                Zhanas::create([
-                    'word' => $word
-                ]);
+        $wordsNotInBaskats = [];
+        foreach ($words as $word) {
+            if (!Baskat::where('word', $word)->exists()) {
+                Zhanas::firstOrCreate(['word' => $word]);
+                $wordsNotInBaskats[] = $word;
             }
         }
 

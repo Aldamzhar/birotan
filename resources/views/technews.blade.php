@@ -27,7 +27,7 @@
                     <h2 class="news-title">
                         <a href="{{ $article['link'] }}" target="_blank">{{ $article['title'] }}</a>
                     </h2>
-                    <p class="news-meta">{{ (new DateTime($article['publishedAt']))->format('d/m/Y') }} | {{ $article['author_name'] }}</p>
+                    <p class="news-meta">{{ (new DateTime($article['publication_date']))->format('d/m/Y') }} | {{ $article['author_name'] }}</p>
                     <p class="news-description">{{ $article['description'] }}</p>
                 </div>
             </div>

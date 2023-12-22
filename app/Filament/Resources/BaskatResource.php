@@ -40,7 +40,7 @@ class BaskatResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('word')->label('Слово')->searchable(),
+                Tables\Columns\TextColumn::make('word')->label('Слово')->searchable()->sortable(),
             ])
             ->defaultSort('word')
             ->filters([

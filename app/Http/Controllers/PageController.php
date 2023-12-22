@@ -43,6 +43,6 @@ class PageController extends Controller
 
         // The paginate method automatically handles totalResults and other pagination details
 
-        return view('technews', ['newsItems' => News::all()]);
+        return view('technews', ['newsItems' => News::orderBy('publication_date', 'desc')->get()]);
     }
 }
