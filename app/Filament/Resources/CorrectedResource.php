@@ -75,7 +75,13 @@ class CorrectedResource extends Resource
     {
         DB::transaction(function () use ($record) {
             $destinationData = $record->toArray();
-            Baskat::firstOrCreate($destinationData);
+            $word = $destinationData['word'];
+            $exists = DB::table('baskats')->where('word', $word)->exists();
+            if (!$exists) {
+                Baskat::create([
+                    'word' => $word
+                ]);
+            }
             $record->delete();
         });
         Notification::make('success')->title('Запись успешно перемещена в Баскат')->send();
@@ -84,14 +90,18 @@ class CorrectedResource extends Resource
     public static function moveAllRows($records): void
     {
         DB::transaction(function () use ($records) {
-            $destinationData = [];
             foreach ($records as $record) {
                 if ($record) {
                     $data = $record->toArray();
-                    $destinationData[] = $data;
+                    $word = $data['word'];
+                    $exists = DB::table('baskats')->where('word', $word)->exists();
+                    if (!$exists) {
+                        Baskat::create([
+                            'word' => $word
+                        ]);
+                    }
                 }
             }
-            DB::table('baskats')->insertOrIgnore($destinationData);
             DB::table('correcteds')->delete();
         });
 

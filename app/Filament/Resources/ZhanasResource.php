@@ -86,10 +86,15 @@ class ZhanasResource extends Resource
             foreach ($records as $record) {
                 if ($record) {
                     $data = $record->toArray();
-                    $destinationData[] = $data;
+                    $word = $data['word'];
+                    $exists = DB::table('correcteds')->where('word', $word)->exists();
+                    if (!$exists) {
+                        Corrected::create([
+                            'word' => $word
+                        ]);
+                    }
                 }
             }
-            DB::table('correcteds')->insertOrIgnore($destinationData);
             DB::table('zhanas')->delete();
         });
 
@@ -105,7 +110,13 @@ class ZhanasResource extends Resource
     {
         DB::transaction(function () use ($record) {
             $destinationData = $record->toArray();
-            Corrected::firstOrCreate($destinationData);
+            $word = $destinationData['word'];
+            $exists = DB::table('correcteds')->where('word', $word)->exists();
+            if (!$exists) {
+                Corrected::create([
+                    'word' => $word
+                ]);
+            }
             $record->delete();
         });
         Notification::make('success')->title('Запись успешно перемещена в Исправленные')->send();
