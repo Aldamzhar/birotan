@@ -13,6 +13,30 @@ use Illuminate\Support\Facades\Session;
 
 class PageController extends Controller
 {
+    public function loginPage() {
+        return view('login');
+    }
+
+    public function login(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $envEmail = env('LOGIN_EMAIL');
+        $envPassword = env('LOGIN_PASSWORD');
+
+        if ($request->email === $envEmail && $request->password === $envPassword) {
+            $request->session()->put('logged_in', true);
+            return redirect()->route('birotanlex-pro');
+        }
+
+        return back()->withErrors([
+            'email' => 'Неверная почта либо пароль',
+        ]);
+
+    }
+
     public function index()
     {
         return view('index');
@@ -27,6 +51,16 @@ class PageController extends Controller
     {
         return view('birotanlex');
     }
+
+    public function birotanlexPro(Request $request)
+    {
+        if (!$request->session()->has('logged_in')) {
+            // Redirect to the login page
+            return redirect()->route('login.page');
+        }
+        return view('birotanlex-pro');
+    }
+
 
     public function birotanauen()
     {

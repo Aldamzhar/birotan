@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProTextAnalysisController;
 use App\Http\Controllers\TextAnalysisController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,7 @@ Route::post('/words-and-occurrences', [TextAnalysisController::class, 'wordsAndO
 Route::post('/check-baskats', [TextAnalysisController::class, 'checkBaskats']);
 //Route::post('/upload-file', [FileController::class, 'uploadFile'])->name('upload.file');
 Route::post('/import', [FileController::class, 'import']);
+
+Route::post('/pro-analyze-text', [ProTextAnalysisController::class, 'analyzeText']);
+Route::post('/pro-words-and-occurrences', [ProTextAnalysisController::class, 'wordsAndOccurrences']);
+Route::post('/pro-check-baskats', [ProTextAnalysisController::class, 'checkBaskats']);

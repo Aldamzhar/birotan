@@ -12,7 +12,12 @@
 <body>
 <header>
     <a href="{{ url('/about') }}" class="menu-item">Сайт туралы</a>
-    <a href="{{ url('/birotanlex') }}" class="menu-item">БірОтан лексика</a>
+    <div class="dropdown">
+        <a href="{{ url('/birotanlex') }}" class="menu-item">БірОтан лексика</a>
+        <div class="dropdown-content">
+            <a href="{{ url('/birotanlex-pro') }}" class="menu-item">БірОтан лекc-pro</a>
+        </div>
+    </div>
     <a href="{{ url('/mypage') }}" class="menu-item"><img src="/storage/img_8.png"></a>
     <a href="{{ url('/technews') }}" class="menu-item">Tech+Жаңалық</a>
     <a href="{{ url('/birotanauen') }}" class="menu-item">БірОтан әуені</a>
@@ -69,6 +74,71 @@
         margin: 0;
         padding: 0;
         overflow: hidden; /* Prevent the main scrollbar */
+    }
+
+
+    /* Style the dropdown container */
+    .dropdown {
+        display: inline-block;
+    }
+
+    /* Style the dropdown button */
+    .dropbtn {
+        display: inline-block; /* Sets the element's display to inline-block */
+        white-space: nowrap; /* Prevents the text from wrapping */
+        overflow: hidden; /* Keeps the content from spilling out */
+        text-overflow: ellipsis; /* Adds an ellipsis if the text is too long to fit */
+        text-align: center; /* Centers the content inside the anchor */
+        vertical-align: top; /* Aligns the anchor with the top of the line */
+        /*display: flex; !* Enables flexbox *!*/
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        height: 100%; /* You might need to adjust this */
+        text-decoration: none;
+        color: #2A0FA9;
+        margin: 0 10px;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    /* Dropdown content (hidden by default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white; /* Light grey background */
+        /*z-index: 1;*/
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        display: inline-block; /* Sets the element's display to inline-block */
+        white-space: nowrap; /* Prevents the text from wrapping */
+        overflow: hidden; /* Keeps the content from spilling out */
+        text-overflow: ellipsis; /* Adds an ellipsis if the text is too long to fit */
+        text-align: center; /* Centers the content inside the anchor */
+        vertical-align: top; /* Aligns the anchor with the top of the line */
+        /*display: flex; !* Enables flexbox *!*/
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        height: 100%; /* You might need to adjust this */
+        text-decoration: none;
+        color: #2A0FA9;
+        margin: 0 10px;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {background-color: white}
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+        background-color: white; /* Darker green */
     }
 
     main {

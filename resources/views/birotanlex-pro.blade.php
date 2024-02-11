@@ -35,7 +35,7 @@
         <input type="text" id="textTitle" name="textTitle" placeholder="Мәтін тақырыбы" required>
         <textarea class="input" placeholder="Мәтінді енгізіңіз..."></textarea>
         <div class="textarea-footer">
-            <span>0/5000</span>
+            <span>0/150000</span>
             <div class="icons">
                 <button id="pasteTextButton">📋</button> <!-- You can replace this with the actual icon -->
             </div>
@@ -82,6 +82,30 @@
         background-color: tan;
     }
 
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        padding: 10px 0;
+        box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+    }
+
+    @font-face {
+        font-family: 'ADLaMDisplay-Regular'; /* A name for your font that will be used in CSS */
+        src: url('public/assets/ADLaMDisplay-Regular.ttf') format('truetype'); /* URL to your font file in your project, and the format */
+        /* Optional: add font-weight and font-style properties if you have variations of the font (like bold or italic) */
+        font-weight: normal;
+        font-style: normal;
+    }
+
+
+    h1 {
+        font-family: ADLaMDisplay-Regular, sans-serif;
+        font-size: 35px;
+        color: #0277BD; /* Change this color to match your design */
+        margin: 0;
+    }
 
     /* Style the dropdown container */
     .dropdown {
@@ -145,31 +169,6 @@
     /* Change the background color of the dropdown button when the dropdown content is shown */
     .dropdown:hover .dropbtn {
         background-color: white; /* Darker green */
-    }
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: white;
-        padding: 10px 0;
-        box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
-    }
-
-    @font-face {
-        font-family: 'ADLaMDisplay-Regular'; /* A name for your font that will be used in CSS */
-        src: url('public/assets/ADLaMDisplay-Regular.ttf') format('truetype'); /* URL to your font file in your project, and the format */
-        /* Optional: add font-weight and font-style properties if you have variations of the font (like bold or italic) */
-        font-weight: normal;
-        font-style: normal;
-    }
-
-
-    h1 {
-        font-family: ADLaMDisplay-Regular, sans-serif;
-        font-size: 35px;
-        color: #0277BD; /* Change this color to match your design */
-        margin: 0;
     }
 
     .menu-item {
@@ -345,11 +344,11 @@
                                         .filter(word => word.length > 0 && !/^[-–]+$/.test(word));
             const wordCount = words.length;
 
-            wordCountSpan.textContent = `${wordCount}/5000`;
+            wordCountSpan.textContent = `${wordCount}/150000`;
 
-            if (wordCount > 5000) {
-                errorDiv.textContent = "Қате! Мәтін көлемін азайтыңыз, шекті саны - 5000 сөз"; // Display the error message
-                const limitedWords = words.slice(0, 5000).join(" ");
+            if (wordCount > 150000) {
+                errorDiv.textContent = "Қате! Мәтін көлемін азайтыңыз, шекті саны - 150000 сөз"; // Display the error message
+                const limitedWords = words.slice(0, 150000).join(" ");
                 textarea.value = limitedWords; // Limit the text to 5000 words
             } else {
                 errorDiv.textContent = ''; // Clear the error message when under the limit
@@ -371,7 +370,7 @@
         bolButton.addEventListener('click', async () => {
             const text = textarea.value;
             try {
-                const response = await fetch('/api/analyze-text', {
+                const response = await fetch('/api/pro-analyze-text', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -399,7 +398,7 @@
         wordStatsButton.addEventListener('click', async () => {
             const text = textarea.value;
             try {
-                const response = await fetch('/api/words-and-occurrences', {
+                const response = await fetch('/api/pro-words-and-occurrences', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -434,7 +433,7 @@
         errorWordsButton.addEventListener('click', function() {
             const text = textarea.value;
 
-            fetch('/api/check-baskats', {
+            fetch('/api/pro-check-baskats', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -551,11 +550,11 @@
             const words = textarea.value.split(/\s+/).filter(word => word.length > 0);
             const wordCount = words.length;
 
-            wordCountSpan.textContent = `${wordCount}/5000`;
+            wordCountSpan.textContent = `${wordCount}/150000`;
 
-            if (wordCount > 5000) {
-                errorDiv.textContent = "Қате! Мәтін көлемін азайтыңыз, шекті саны - 5000 сөз"; // Display the error message
-                const limitedWords = words.slice(0, 5000).join(" ");
+            if (wordCount > 150000) {
+                errorDiv.textContent = "Қате! Мәтін көлемін азайтыңыз, шекті саны - 150000 сөз"; // Display the error message
+                const limitedWords = words.slice(0, 150000).join(" ");
                 textarea.value = limitedWords; // Limit the text to 5000 words
             } else {
                 errorDiv.textContent = ''; // Clear the error message when under the limit
