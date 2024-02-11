@@ -13,7 +13,7 @@
     <div class="dropdown">
         <a href="{{ url('/birotanlex') }}" class="menu-item">БірОтан лексика</a>
         <div class="dropdown-content">
-            <a href="{{ url('/birotanlex-pro') }}" class="menu-item">БірОтан лекc-pro</a>
+            <a href="{{ url('/birotanlex-pro') }}" class="menu-item">БірОтан лекс-PRO</a>
         </div>
     </div>
     <a href="{{ url('/mypage') }}" class="menu-item"><img src="/storage/img_8.png"></a>

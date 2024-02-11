@@ -83,7 +83,7 @@
 </head>
 <body>
 <div class="card">
-    <div class="card-header">Біротан Лексика PRO</div>
+    <div class="card-header">БірОтан лексика PRO</div>
     <div class="card-body">
         <form method="POST" action="{{ route('login') }}">
             @csrf
