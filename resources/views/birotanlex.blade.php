@@ -1,33 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <!-- For Mammoth.js (DOCX files) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
-    <!-- For PDF.js (PDF files) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
-
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link href='https://fonts.googleapis.com/css?family="ADLaM Display"' rel='stylesheet'>
-    <link rel="icon" type="image/png" href="/storage/img_4.png">
-    <title>BirOtan</title>
-</head>
+@include('title')
 <body>
-<header>
-    <a href="{{ url('/about') }}" class="menu-item">Сайт туралы</a>
-    <div class="dropdown">
-        <a href="{{ url('/birotanlex') }}" class="menu-item">БірОтан лексика</a>
-        <div class="dropdown-content">
-            <a href="{{ url('/birotanlex-pro') }}" class="menu-item">БірОтан лекс-PRO</a>
-        </div>
-    </div>
-    <a href="{{ url('/mypage') }}" class="menu-item"><img src="/storage/img_8.png"></a>
-    <a href="{{ url('/technews') }}" class="menu-item">Tech+Жаңалық</a>
-    <a href="{{ url('/birotanauen') }}" class="menu-item">БірОтан әуені</a>
-</header>
+@include('header')
 
 <div class="container">
     <div class="textarea-container">
@@ -62,216 +35,63 @@
 
 
 </body>
-</html>
 
 <style>
-
-    /*a {*/
-    /*    align-items: center;*/
-    /*}*/
-
-    /*img {*/
-    /*    width: 40%;*/
-    /*    height: 40%;*/
-    /*}*/
-
     body {
-        font-family: Arial, sans-serif;
+        font-family: Inter, serif;
         margin: 0;
         padding: 0;
-        background-color: tan;
+        background-color: #2B4D7B;
     }
-
-
-    /* Style the dropdown container */
-    .dropdown {
-        display: inline-block;
-    }
-
-    /* Style the dropdown button */
-    .dropbtn {
-        display: inline-block; /* Sets the element's display to inline-block */
-        white-space: nowrap; /* Prevents the text from wrapping */
-        overflow: hidden; /* Keeps the content from spilling out */
-        text-overflow: ellipsis; /* Adds an ellipsis if the text is too long to fit */
-        text-align: center; /* Centers the content inside the anchor */
-        vertical-align: top; /* Aligns the anchor with the top of the line */
-        /*display: flex; !* Enables flexbox *!*/
-        justify-content: center; /* Centers horizontally */
-        align-items: center; /* Centers vertically */
-        height: 100%; /* You might need to adjust this */
-        text-decoration: none;
-        color: #2A0FA9;
-        margin: 0 10px;
-        font-size: 25px;
-        font-weight: bold;
-    }
-
-    /* Dropdown content (hidden by default) */
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: white; /* Light grey background */
-        /*z-index: 1;*/
-    }
-
-    /* Links inside the dropdown */
-    .dropdown-content a {
-        display: inline-block; /* Sets the element's display to inline-block */
-        white-space: nowrap; /* Prevents the text from wrapping */
-        overflow: hidden; /* Keeps the content from spilling out */
-        text-overflow: ellipsis; /* Adds an ellipsis if the text is too long to fit */
-        text-align: center; /* Centers the content inside the anchor */
-        vertical-align: top; /* Aligns the anchor with the top of the line */
-        /*display: flex; !* Enables flexbox *!*/
-        justify-content: center; /* Centers horizontally */
-        align-items: center; /* Centers vertically */
-        height: 100%; /* You might need to adjust this */
-        text-decoration: none;
-        color: #2A0FA9;
-        margin: 0 10px;
-        font-size: 25px;
-        font-weight: bold;
-    }
-
-    /* Change color of dropdown links on hover */
-    .dropdown-content a:hover {background-color: white}
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    /* Change the background color of the dropdown button when the dropdown content is shown */
-    .dropdown:hover .dropbtn {
-        background-color: white; /* Darker green */
-    }
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: white;
-        padding: 10px 0;
-        box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
-    }
-
-    @font-face {
-        font-family: 'ADLaMDisplay-Regular'; /* A name for your font that will be used in CSS */
-        src: url('public/assets/ADLaMDisplay-Regular.ttf') format('truetype'); /* URL to your font file in your project, and the format */
-        /* Optional: add font-weight and font-style properties if you have variations of the font (like bold or italic) */
-        font-weight: normal;
-        font-style: normal;
-    }
-
-
-    h1 {
-        font-family: ADLaMDisplay-Regular, sans-serif;
-        font-size: 35px;
-        color: #0277BD; /* Change this color to match your design */
-        margin: 0;
-    }
-
-    .menu-item {
-        display: inline-block; /* Sets the element's display to inline-block */
-        white-space: nowrap; /* Prevents the text from wrapping */
-        overflow: hidden; /* Keeps the content from spilling out */
-        text-overflow: ellipsis; /* Adds an ellipsis if the text is too long to fit */
-        text-align: center; /* Centers the content inside the anchor */
-        vertical-align: top; /* Aligns the anchor with the top of the line */
-        /*display: flex; !* Enables flexbox *!*/
-        justify-content: center; /* Centers horizontally */
-        align-items: center; /* Centers vertically */
-        height: 100%; /* You might need to adjust this */
-        text-decoration: none;
-        color: #2A0FA9;
-        margin: 0 10px;
-        font-size: 25px;
-        font-weight: bold;
-    }
-
-    .menu-item img {
-        max-width: 100%; /* Ensures the image is not bigger than the container */
-        height: auto; /* Maintains the aspect ratio */
-        width: auto; /* Sets the image width to auto */
-        /*height: auto; !* Sets the image height to auto *!*/
-        max-height: 90px; /* Adjust the max-height to match the surrounding elements */
-        vertical-align: top; /* Aligns the image with the top of the line */
-    }
-
-    .menu-item:hover {
-        text-decoration: underline;
-    }
-
 
     .container {
         display: flex;
         gap: 20px;
         justify-content: center;
+        padding: 20px;
     }
 
     .textarea-container {
-        margin-top: 35px;
         width: 40%;
         background-color: white;
         border-radius: 10px;
         padding: 20px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
-        min-height: 500px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     }
 
-    textarea {
-        border: none;
+    .input, .output {
+        border: 1px solid #ccc;
         border-radius: 5px;
-        /*padding: 10px;*/
+        padding: 10px;
         font-size: 14px;
         width: 100%;
-        height: 400px; /* adjust as needed */
+        height: 300px; /* Adjust as needed */
         resize: none;
+        margin-bottom: 10px;
+        font-family: Inter, serif; /* Ensures the font for text inside textarea */
     }
 
     input[type=text] {
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-        width: 100%;
-        /*padding: 10px;*/
-        margin-bottom: 10px; /* adds space between the inputs */
-        /*box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); !* adds a subtle shadow like the textarea *!*/
-        resize: none;
-    }
-
-    .not-in-baskat {
-        color: red;
-        font-weight: bold;
-    }
-
-    .output {
-        /* Add the same styles as your textarea */
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        box-sizing: border-box;
         border: 1px solid #ccc;
         border-radius: 5px;
-        /*padding: 10px;*/
+        padding: 10px;
         font-size: 14px;
         width: 100%;
-        height: 400px; /* Adjust as needed */
-        overflow: auto;
-        background-color: #fff;
-        /*margin-top: 35px;*/
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        font-family: Inter, serif; /* Ensures the font for input text */
     }
 
-
+    input[type=text]::placeholder,
+    .input::placeholder {
+        font-family: Inter, serif; /* Ensures the font for placeholder text */
+    }
 
     .textarea-footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-top: 10px;
     }
 
     .icons button {
@@ -279,48 +99,56 @@
         border: none;
         font-size: 16px;
         cursor: pointer;
+        font-family: Inter, serif; /* Ensures the font for button text */
     }
-
-    #downloadButton {
-        padding: 20px 40px; /* Increase padding to make button larger */
-        font-size: 1.1em; /* Increase font size */
-    }
-
 
     .buttons {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        margin-top: 10px;
     }
 
     button {
         border: none;
-        background-color: #F7C45F;
+        background-color: #BF9356;
+        color: white;
         padding: 10px;
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
+        font-family: Inter, serif; /* Ensures the font for button text */
     }
 
     button:hover {
-        background-color: #F7B042;
+        background-color: #a37a46;
     }
 
     .bottom-buttons {
         display: flex;
-        gap: 20px;
-        margin-top: 20px;
-        margin-bottom: 20px;
         justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    #downloadButton {
+        padding: 10px 20px;
+        font-size: 1.1em;
+    }
+
+    .output {
+        background-color: #ffffff;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .not-in-baskat {
+        color: red;
+        font-weight: bold;
     }
 
     .underline-error {
         text-decoration: underline wavy red; /* Creates a wavy underline */
     }
-
-
-
 </style>
 
 <script>

@@ -1,13 +1,12 @@
 <footer class="footer">
     <div class="footer-section-first">
-        <img class="footer-img" src="/storage/img_9.png">
         <p>Birotan.kz сайты – қазақтілді ақпараттық, ғылыми-танымдық мазмұндағы ресурс. <br>Сайтта «БірОтан лексика» ғылыми-ағартушылық жобасы ұсынылған және әлемдегі, <br>еліміздегі басты технологиялық жаңалықтар жарияланады.</p>
         <p><b>© 2023 BirOtan.kz. Барлық құқықтар қорғалған</b></p>
     </div>
     <div class="footer-section-second">
-        <p><b>Мекенжайы:</b> 010000, Астана қаласы<br>
-            <b>Байланыс телефоны:</b> +7 (701) ХХХ ХХХХ<br>
-            <b>E-mail:</b> info@birotan.kz
+        <p><i>Мекенжайы: 010000, Астана қаласы</i><br>
+                <i>Байланыс телефоны: +7 (701) ХХХ ХХХХ</i><br>
+                    <i>E-mail: info@birotan.kz</i>
         </p>
     </div>
 </footer>
@@ -33,7 +32,7 @@
         /*padding-top: 30px;*/
         background-color: white;
         color: #000;
-        font-family: Arial, sans-serif;
+        font-family: Inter, serif;
         font-size: 15px;
         /*position: absolute;*/
         left: 0;

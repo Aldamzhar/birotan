@@ -1,86 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            /*background-color: #ffffff; !* You can change this to your page's background color *!*/
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: tan;
-        }
-        .card-body {
-            padding: 2em;
-            background-color: #ffffff;
-        }
-
-        .card {
-            width: 100%;
-            max-width: 400px; /* Adjust the width of the card */
-            margin: auto;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .card-header {
-            background-color: #f8f9fa; /* Light grey background */
-            color: #495057; /* Dark grey text */
-            padding: 16px;
-            border-radius: 8px 8px 0 0;
-            margin: -20px -20px 20px -20px; /* Aligns header background with card edges */
-            font-size: 24px; /* Large text size */
-            text-align: center;
-            font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            /*margin-bottom: 20px; !* Spacing between form groups *!*/
-        }
-        .btn-primary {
-            background-color: #ffc107; /* Bootstrap yellow */
-            border-color: #ffc107;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .btn-secondary {
-            background-color: #e9ecef; /* Light grey background */
-            border-color: #e9ecef;
-            color: #495057; /* Dark grey text */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .btn {
-            padding: 10px 24px; /* Larger padding for buttons */
-            font-size: 16px; /* Larger font size for buttons */
-            margin-right: 8px; /* Spacing between buttons */
-        }
-        .form-group label {
-            /*display: block;*/
-            /*margin-bottom: 1rem; !* Adjust the space between the label and the input *!*/
-        }
-
-        input[type="email"], input[type="password"] {
-            display: block;
-            width: 100%; /* Make input full width */
-            padding: 3px;
-            margin-top: 1rem; /* Space above the input */
-            margin-bottom: 1rem; /* Space below the input */
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        input[type="email"]:focus, input[type="password"]:focus {
-            border-color: #80bdff;
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-        }
-    </style>
-</head>
+@include('title')
 <body>
 <div class="card">
     <div class="card-header">БірОтан лексика PRO</div>
@@ -107,13 +25,101 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">
-                    Войти
+                    Кіру
                 </button>
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Отмена</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Оралу</a>
             </div>
         </form>
     </div>
 </div>
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 </body>
-</html>
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, sans-serif;
+        background-color: #4a75a8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 400px;
+        margin: auto;
+        padding: 35px;
+        border-radius: 8px;
+        background-color: #e0ebf5;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #e0ebf5;
+        color: #4a75a8;
+        padding: 16px;
+        border-radius: 8px 8px 0 0;
+        font-size: 24px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .btn {
+        padding: 10px 24px;
+        font-size: 16px;
+        margin-top: 1.5rem;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        color: #4a75a8;
+    }
+
+    input[type="email"], input[type="password"] {
+        width: 100%;
+        margin-top: 0.5rem; /* Space above the input */
+        margin-bottom: 0.5rem; /* Increased space below the input */
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 16px;
+        font-family: Inter, sans-serif;
+    }
+
+    input[type="email"]::placeholder, input[type="password"]::placeholder {
+        font-family: Inter, sans-serif;
+    }
+
+    input[type="email"]:focus, input[type="password"]:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    }
+
+    .btn-primary {
+        background-color: #223f69;
+        border-color: #223f69;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-family: Inter, sans-serif;
+        padding: 10px 24px;
+        font-size: 16px;
+    }
+
+    .btn-secondary {
+        background-color: #a3c1dd;
+        border-color: #a3c1dd;
+        color: #4a75a8;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-family: Inter, sans-serif;
+        padding: 10px 24px;
+        font-size: 16px;
+        margin-left: 95px;
+    }
+
+    .btn:hover {
+        opacity: 0.8;
+    }
+
+</style>

@@ -64,19 +64,11 @@ class PageController extends Controller
 
     public function birotanauen()
     {
-        $videos = Songs::all()->sortByDesc('publication_date');
+        $videos = Songs::orderBy('publication_date', 'desc')->paginate(2);
         return view('birotanauen', ['videos' => $videos]);
     }
 
     public function techNews(Request $request) {
-        $page = $request->input('page', 1); // Get the current page or default to 1
-        $pageSize = 3;
-
-        // Retrieve news items from the News model with pagination
-        $paginatedNewsItems = News::paginate($pageSize, ['*'], 'page', $page);
-
-        // The paginate method automatically handles totalResults and other pagination details
-
-        return view('technews', ['newsItems' => News::orderBy('publication_date', 'desc')->get()]);
+        return view('technews', ['newsItems' => News::orderBy('publication_date', 'desc')->paginate(2)]);
     }
 }
