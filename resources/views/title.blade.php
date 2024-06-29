@@ -22,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family="ADLaM Display"' rel='stylesheet'>
 
-    <link rel="icon" type="image/png" href="/storage/img_11.png">
+    <link rel="icon" type="image/png" href="{{\Illuminate\Support\Facades\Storage::disk()->url("img_11.png")}}">
     <title>BirOtan</title>
 </head>
 

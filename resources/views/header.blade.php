@@ -1,6 +1,6 @@
 <header>
     <div class="logo">
-        <a href="{{url('/mypage')}}"><img src="/storage/img_10.png" alt="BirOtan Logo"></a>
+        <a href="{{url('/mypage')}}"><img src="{{\Illuminate\Support\Facades\Storage::disk()->url("img_10.png")}}" alt="BirOtan Logo"></a>
     </div>
     <nav>
         <a href="{{ url('/about') }}" class="menu-item"><u>Сайт туралы</u></a>

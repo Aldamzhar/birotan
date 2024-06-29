@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="/storage/img_4.png">
+    <link rel="icon" type="image/png" href="{{\Illuminate\Support\Facades\Storage::disk()->url("img_4.png")}}">
     <title>BirOtan</title>
 </head>
 <body>

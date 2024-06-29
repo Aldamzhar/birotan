@@ -26,5 +26,4 @@ Route::get('/login', [PageController::class, 'loginPage'])->name('login.page');
 Route::post('/login', [PageController::class, 'login'])->name('login');
 Route::get('/technews', [PageController::class, 'technews']);
 Route::get('/birotanauen', [PageController::class, 'birotanauen'])->name('birotanauen');
-Route::get('/allvideos', [PageController::class, 'allVideos'])->name('allVideos');
 
