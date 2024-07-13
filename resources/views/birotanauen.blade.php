@@ -113,7 +113,7 @@
     .video-meta {
         display: block;
         color: #ffffff;
-        font-size: 1em;
+        font-size: 0.90em;
         text-align: center;
         margin-top: 10px;
     }
