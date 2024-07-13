@@ -64,11 +64,11 @@ class PageController extends Controller
 
     public function birotanauen()
     {
-        $videos = Songs::orderBy('publication_date', 'desc')->paginate(2);
+        $videos = Songs::orderBy('publication_date', 'desc')->paginate(6);
         return view('birotanauen', ['videos' => $videos]);
     }
 
     public function techNews(Request $request) {
-        return view('technews', ['newsItems' => News::orderBy('publication_date', 'desc')->paginate(2)]);
+        return view('technews', ['newsItems' => News::orderBy('publication_date', 'desc')->paginate(6)]);
     }
 }

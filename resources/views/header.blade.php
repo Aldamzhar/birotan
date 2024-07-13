@@ -7,10 +7,10 @@
         <div class="dropdown">
             <a href="{{ url('/birotanlex') }}" class="menu-item"><u>БірОтан лексика</u></a>
             <div class="dropdown-content">
-                <a href="{{ url('/birotanlex-pro') }}" class="menu-item"><u>БірОтан лекс-PRO</u></a>
+                <a href="{{ url('/birotanlex-pro') }}" class="menu-item"><u>БірОтан лексика.pro</u></a>
             </div>
         </div>
-        <a href="{{ url('/technews') }}" class="menu-item"><u>Tech+Жаңалық</u></a>
+        <a href="{{ url('/technews') }}" class="menu-item"><u>Tech+жаңалық</u></a>
         <a href="{{ url('/birotanauen') }}" class="menu-item"><u>БірОтан әуені</u></a>
     </nav>
 </header>

@@ -52,38 +52,29 @@
         margin: 0;
         padding: 0;
         background-color: rgb(191,147,86); /* Gold background */
-        overflow: hidden;
-        height: 100%; /* Full height for the scrollable body */
-    }
-
-    .header-title {
+        height: 100vh; /* Full height for the viewport */
         display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        justify-items: stretch;
-        padding-top: 20px;
+        flex-direction: column;
     }
 
-    .header-title h2 {
-        font-weight: normal;
-        color: white; /* Blue color */
-        border-left: 5px solid #003366;
-        padding-left: 10px;
+    header {
+        flex: 0 0 auto;
     }
 
-    .view-all {
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 1em;
-        position: absolute;
-        right: 20px;
+    main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .videos-list {
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Creates two columns */
+        grid-template-columns: repeat(3, 1fr); /* Creates three columns */
         grid-gap: 20px;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow: auto; /* Allow scrolling within the grid if needed */
     }
 
     .video-item {
@@ -94,7 +85,7 @@
         overflow: hidden;
         font-family: Inter, serif;
         background-color: rgba(0, 0, 0, 0.3);
-        margin: 40px;
+        margin: 0;
     }
 
     .video-thumbnail {
@@ -135,6 +126,8 @@
     .pagination-container {
         display: flex;
         justify-content: center;
+        padding: 10px;
+        flex: 0 0 auto;
     }
 
     .pagination {
