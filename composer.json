@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-gd": "*",
         "bezhansalleh/filament-language-switch": "3.1.0",
         "coolsam/excel-import": "1.1.0",
         "filament/filament": "v3.3.2",
@@ -19,12 +20,12 @@
         "laravel/telescope": "v4.17.6",
         "laravel/tinker": "v2.10.1",
         "maatwebsite/excel": "3.1.64",
-        "phpoffice/phpword": "1.3.0",
+        "phpoffice/phpword": "^1.3",
         "pxlrbt/filament-excel": "v2.4.2",
+        "setasign/fpdi": "^2.6",
         "smalot/pdfparser": "v2.11.0",
         "spatie/pdf-to-image": "1.2.2",
-        "spatie/pdf-to-text": "1.54.0",
-        "ext-gd": "*"
+        "spatie/pdf-to-text": "1.54.0"
     },
     "require-dev": {
         "fakerphp/faker": "v1.24.1",
