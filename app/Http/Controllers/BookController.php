@@ -54,7 +54,7 @@ class BookController extends Controller
         return $outputFile;
     }
 
-    function extractFirst10PagesFromWord(string $filePath): ?string
+    private function extractFirst10PagesFromWord(string $filePath): ?string
     {
         if (!file_exists($filePath) || !is_readable($filePath)) {
             throw new InvalidArgumentException("The file does not exist or is not readable: {$filePath}");
@@ -71,7 +71,7 @@ class BookController extends Controller
         $pdfWriter = IOFactory::createWriter($phpWord, 'PDF');
         $pdfWriter->save($pdfFile);
 
-        return extractFirst10PagesFromPDF($pdfFile);
+        return $this->extractFirst10PagesFromPDF($pdfFile);
     }
 
 
@@ -81,10 +81,10 @@ class BookController extends Controller
 
         switch ($fileExtension) {
             case 'pdf':
-                return extractFirst10PagesFromPDF($filePath);
+                return $this->extractFirst10PagesFromPDF($filePath);
             case 'doc':
             case 'docx':
-                return extractFirst10PagesFromWord($filePath);
+                return $this->extractFirst10PagesFromWord($filePath);
             default:
                 throw new InvalidArgumentException("Unsupported file type: {$fileExtension}");
         }
