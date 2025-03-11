@@ -39,7 +39,13 @@ class BookResource extends Resource
                     ->directory('uploads/books')
                     ->disk('public')
                     ->visibility('public')
-                    ->acceptedFileTypes(['application/pdf'])
+                    ->acceptedFileTypes([
+                        'application/pdf',
+                        'application/msword',
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx files
+                        'doc',
+                        'docx'
+                    ])
                     ->downloadable()
                     ->openable()
                     ->required()
