@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpWord\Exception\Exception;
+use setasign\Fpdi\Fpdi;
 use PhpOffice\PhpWord\IOFactory;
-use Smalot\PdfParser\Parser;
 
 class BookController extends Controller
 {
@@ -54,6 +54,9 @@ class BookController extends Controller
         return $outputFile;
     }
 
+    /**
+     * @throws Exception
+     */
     private function extractFirst10PagesFromWord(string $filePath): ?string
     {
         if (!file_exists($filePath) || !is_readable($filePath)) {
@@ -68,7 +71,7 @@ class BookController extends Controller
         $pdfFile = $outputDirectory . pathinfo($filePath, PATHINFO_FILENAME) . ".pdf";
 
         $phpWord = IOFactory::load($filePath);
-        $pdfWriter = IOFactory::createWriter($phpWord, 'PDF');
+        $pdfWriter = IOFactory::createWriter($phpWord);
         $pdfWriter->save($pdfFile);
 
         return $this->extractFirst10PagesFromPDF($pdfFile);
