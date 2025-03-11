@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Response;
 use PhpOffice\PhpWord\Exception\Exception;
 use setasign\Fpdi\Fpdi;
 use PhpOffice\PhpWord\IOFactory;
+use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
+use setasign\Fpdi\PdfParser\Filter\FilterException;
+use setasign\Fpdi\PdfParser\PdfParserException;
+use setasign\Fpdi\PdfParser\Type\PdfTypeException;
+use setasign\Fpdi\PdfReader\PdfReaderException;
 
 class BookController extends Controller
 {
@@ -26,6 +31,13 @@ class BookController extends Controller
         return view('books.preview', compact('book', 'publicPreviewPath'));
     }
 
+    /**
+     * @throws CrossReferenceException
+     * @throws PdfReaderException
+     * @throws PdfParserException
+     * @throws PdfTypeException
+     * @throws FilterException
+     */
     private function extractFirst10PagesFromPDF(string $filePath): ?string
     {
         if (!file_exists($filePath) || !is_readable($filePath)) {
