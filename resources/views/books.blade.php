@@ -9,12 +9,12 @@
                     <div class="book-text">
                         <h2 class="book-title">{{ $book->title }}</h2>
                         <p class="book-meta">
-                            Цена: ${{ $book->price }}
+                            Цена: {{ $book->price }} тг
                         </p>
                         <p class="book-description">
                             Описание: {{ $book->description }}</p>
                         <div class="book-buttons">
-                            <a href="{{ route('books.preview', $book->id) }}" class="btn-preview">Preview</a>
+                            <a href="{{ route('books.preview', $book->id) }}" class="btn-preview">Частичный доступ</a>
 {{--                            <form method="POST" action="{{ route('books.buy', $book->id) }}" class="btn-buy-form">--}}
 {{--                                @csrf--}}
 {{--                                <button type="submit" class="btn-buy">Buy the Book</button>--}}
@@ -24,7 +24,7 @@
                 </div>
             @endforeach
         @else
-            <p>No books found.</p>
+            <p>Нету доступных книг</p>
         @endif
     </div>
 

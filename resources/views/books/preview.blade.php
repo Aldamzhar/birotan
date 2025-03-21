@@ -21,11 +21,11 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1>{{ $book->title }} - Preview</h1>
+    <h1>{{ $book->title }} - Частичный доступ</h1>
     <div class="preview-container">
         <iframe src="{{ $publicPreviewPath }}" allowfullscreen></iframe>
     </div>
-    <a href="{{ route('books.buy', $book->id) }}" class="btn btn-primary mt-3">Buy Full Book</a>
+    <a href="{{ route('books.buy', $book->id) }}" class="btn btn-primary mt-3">Купить полную книгу</a>
 </div>
 </body>
 </html>
